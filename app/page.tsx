@@ -1,9 +1,10 @@
 import React from 'react'
+import CommentCard from '@/components/CommentCard'
 
 const Home = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      
+    <main className='md:w-[768px] md:mx-auto mx-5 my-10'>
+      <CommentCard />
     </main>
   )
 }
