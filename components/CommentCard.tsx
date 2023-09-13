@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const CommentCard = () => {
     return (
-        <div className='bg-white p-5 text-dark-blue rounded-md flex gap-5'>
+        <div className='bg-white p-5 text-dark-blue rounded-md flex gap-5 mb-5'>
 
             {/* upvote/ downvote section */}
             <div className='bg-very-light-gray w-fit h-fit p-3 rounded-xl text-center'>
