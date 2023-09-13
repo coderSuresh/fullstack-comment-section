@@ -3,7 +3,7 @@ import CommentCard from '@/components/CommentCard'
 
 const Home = () => {
   return (
-    <main className='md:w-[768px] md:mx-auto mx-5 my-10'>
+    <main className='md:w-[740px] md:mx-auto mx-5 my-10'>
       <CommentCard />
     </main>
   )
