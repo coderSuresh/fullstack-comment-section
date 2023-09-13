@@ -3,10 +3,10 @@ import Image from 'next/image'
 
 const CommentCard = () => {
     return (
-        <div className='bg-white p-5 text-dark-blue rounded-md flex gap-5 mb-5'>
+        <div className='bg-white p-5 text-dark-blue relative rounded-md flex gap-5 mb-5 sm:flex-row flex-col-reverse'>
 
             {/* upvote/ downvote section */}
-            <div className='bg-very-light-gray w-fit h-fit p-3 rounded-xl text-center'>
+            <div className='flex sm:flex-col sm:py-3 px-3 sm:gap-2 gap-x-5  bg-very-light-gray w-fit h-fit rounded-xl text-center'>
                 <button className='text-light-grayish-blue hover:text-moderate-blue'>
                     <i className='fas fa-plus'></i>
                 </button>
@@ -30,7 +30,7 @@ const CommentCard = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className='sm:static absolute bottom-8 right-5'>
                         <button className='flex items-center gap-2 text-moderate-blue hover:opacity-50'>
                             <i className='fas fa-reply'></i>
                             <p className='font-medium'>Reply</p>
