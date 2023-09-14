@@ -1,5 +1,6 @@
 import React from 'react'
 import CommentCard from '@/components/CommentCard'
+import AddComment from '@/components/AddComment'
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
         <CommentCard />
         <CommentCard />
       </div>
+      <AddComment />
     </main>
   )
 }
