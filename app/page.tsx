@@ -5,6 +5,7 @@ import AddComment from '@/components/AddComment'
 const Home = () => {
   return (
     <main className='md:w-[740px] md:mx-auto mx-5 my-10'>
+      {/* TODO: figure out how to upvote once per user per comment */}
       <CommentCard />
       <CommentCard />
       {/* replies */}
