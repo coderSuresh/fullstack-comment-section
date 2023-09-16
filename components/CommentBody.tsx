@@ -9,7 +9,13 @@ const CommentBody = () => {
                 <div className='flex items-center'>
                     <Image src='/images/avatars/image-amyrobson.webp' alt='user avatar' height={50} width={50} className='w-10 h-10 rounded-full' />
                     <div className='ml-4 flex items-center gap-4'>
-                        <p className='font-medium'>John Doe</p>
+                        <div className='flex gap-3 items-center'>
+                            <p className='font-medium'>John Doe</p>
+
+                            {/* render if it is user's own comment or reply */}
+                            <p className='rounded bg-moderate-blue text-white text-sm px-2 font-medium'>you</p>
+
+                        </div>
                         <p className='text-grayish-blue text-sm'>5 hours ago</p>
                     </div>
                 </div>
