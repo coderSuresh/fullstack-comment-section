@@ -59,7 +59,7 @@ const Register = () => {
 
         const { password, confirmPassword } = formData
 
-        if (password !== confirmPassword) {
+        if (confirmPassword && (password !== confirmPassword)) {
             setErrors((errors) => ({ ...errors, password: 'Passwords do not match' }))
         }
         else {
@@ -131,7 +131,7 @@ const Register = () => {
                         pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
                         title='Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters'
                     />
-                    <button type='button' onClick={() => setShowPassword1((showPassword) => !showPassword)}>
+                    <button type='button' tabIndex={-1} onClick={() => setShowPassword1((showPassword) => !showPassword)}>
                         <i className={`fas fa-eye${showPassword1 ? '-slash' : ''} absolute right-2 top-3`} />
                     </button>
                 </div>
@@ -146,7 +146,7 @@ const Register = () => {
                         className='mb-5 p-2 w-full border focus:outline-none focus:border-moderate-blue rounded-md'
                         type={`${showPassword2 ? 'text' : 'password'}`} placeholder='xxxxxxxx'
                     />
-                    <button type='button' onClick={() => setShowPassword2((showPassword) => !showPassword)}>
+                    <button type='button' tabIndex={-1} onClick={() => setShowPassword2((showPassword) => !showPassword)}>
                         <i className={`fas fa-eye${showPassword2 ? '-slash' : ''} absolute right-2 top-3`} />
                     </button>
                 </div>
