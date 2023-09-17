@@ -25,5 +25,5 @@ const RegisterSchema = new Schema({
     },
 })
 
-const Register = models.Register || model('Register', RegisterSchema)
+const Register = models.Users || model('Users', RegisterSchema)
 export default Register
