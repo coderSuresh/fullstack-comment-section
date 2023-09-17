@@ -6,19 +6,19 @@ const POST = async (req: Request) => {
     try {
         const { name, password, confirmPassword, username } = await req.json()
 
-        if (!name || !password || !username) return new Response(JSON.stringify({ message: 'All fields are required' }), {
+        if (!name || !password || !username) return new Response(JSON.stringify({ error: 'All fields are required' }), {
             headers: { 'Content-Type': 'application/json' },
         })
 
-        if (name.length < 3) return new Response(JSON.stringify({ message: 'Name must be at least 3 characters' }), {
+        if (name.length < 3) return new Response(JSON.stringify({ error: 'Name must be at least 3 characters' }), {
             headers: { 'Content-Type': 'application/json' },
         })
 
-        if (password.length < 8) return new Response(JSON.stringify({ message: 'Password must be at least 8 characters' }), {
+        if (password.length < 8) return new Response(JSON.stringify({ error: 'Password must be at least 8 characters' }), {
             headers: { 'Content-Type': 'application/json' },
         })
 
-        if (password != confirmPassword) return new Response(JSON.stringify({ message: 'Password does not match' }), {
+        if (password != confirmPassword) return new Response(JSON.stringify({ error: 'Password does not match' }), {
             headers: { 'Content-Type': 'application/json' },
         })
 

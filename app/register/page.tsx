@@ -8,6 +8,7 @@ const Register = () => {
     const [showPassword2, setShowPassword2] = React.useState(false)
 
     const [errors, setErrors] = React.useState({
+        backendError: '',
         password: '',
     })
 
@@ -32,12 +33,14 @@ const Register = () => {
                     },
                     body: JSON.stringify(formData),
                 })
-                    .then((res) => {
-                       if(res.ok) return res.json()
-                       else console.log(res)
-                    })
+                    .then((res) => res.json())
                     .then((data) => {
-                       console.log(data)
+                        if (data.error) {
+                            setErrors((errors) => ({ ...errors, backendError: data.error }))
+                        }
+                        else {
+                            window.location.href = '/login'
+                        }
                     })
             }
         }
@@ -67,6 +70,12 @@ const Register = () => {
             <h1 className='text-2xl font-semibold mb-5 text-center'>Register</h1>
 
             <form action='#' onSubmit={registerUser} className='flex flex-col'>
+
+                {
+                    errors.backendError &&
+                    <p className='text-soft-red text-sm mb-5'>{errors.backendError}</p>
+                }
+
                 <label className='mb-2'>Name</label>
                 <input
                     required
