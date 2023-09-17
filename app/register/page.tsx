@@ -7,6 +7,7 @@ const Register = () => {
 
     const [showPassword1, setShowPassword1] = React.useState(false)
     const [showPassword2, setShowPassword2] = React.useState(false)
+    const [loading, setLoading] = React.useState(false)
 
     const router = useRouter()
 
@@ -26,6 +27,7 @@ const Register = () => {
         e.preventDefault()
 
         if (e.currentTarget.checkValidity()) {
+            setLoading(true)
             validatePasswords()
 
             if (errors.password === '') {
@@ -42,9 +44,9 @@ const Register = () => {
                             setErrors((errors) => ({ ...errors, backendError: data.error }))
                         }
                         else {
-                            console.log(data)
-                            // router.push('/login')
+                            router.push('/login')
                         }
+                        setLoading(false)
                     })
             }
         }
@@ -149,7 +151,12 @@ const Register = () => {
                 </div>
 
                 <button className='bg-moderate-blue hover:opacity-50 uppercase font-medium text-white py-2 rounded-md'>
-                    Register
+                    {
+                        loading ?
+                            <i className='fas fa-circle-notch fa-spin' />
+                            :
+                            'Register'
+                    }
                 </button>
 
                 <p className='mt-5 text-center'>
