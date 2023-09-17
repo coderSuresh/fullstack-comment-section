@@ -42,7 +42,8 @@ const Register = () => {
                             setErrors((errors) => ({ ...errors, backendError: data.error }))
                         }
                         else {
-                            router.push('/login')
+                            console.log(data)
+                            // router.push('/login')
                         }
                     })
             }

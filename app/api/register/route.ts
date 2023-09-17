@@ -23,6 +23,15 @@ const POST = async (req: Request) => {
         })
 
         await connectDB()
+
+        const userWithSameUsername = await Register.findOne({
+            'username': username
+        })
+
+        if (userWithSameUsername) return new Response(JSON.stringify({ error: 'Username already exists' }), {
+            headers: { 'Content-Type': 'application/json' },
+        })
+
         await Register.create({ name, password, username })
 
         return new Response(JSON.stringify({ message: 'User account created' }), {
