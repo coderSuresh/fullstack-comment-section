@@ -58,6 +58,8 @@ const Register = () => {
                     onChange={(e) => setFormData((data) => ({ ...data, name: e.target.value }))}
                     className='mb-5 p-2 border focus:outline-none focus:border-moderate-blue rounded-md'
                     type='text' placeholder='John Doe'
+                    pattern='[a-zA-Z ]+'
+                    title='Must contain only letters and spaces'
                 />
 
                 <label className='mb-2'>Username</label>
@@ -68,6 +70,8 @@ const Register = () => {
                     onChange={(e) => setFormData((data) => ({ ...data, username: e.target.value }))}
                     className='mb-5 p-2 border focus:outline-none focus:border-moderate-blue rounded-md'
                     type='text' placeholder='johndoe'
+                    pattern='[a-z0-9_]+'
+                    title='Must contain only lowercase letters, numbers and underscores'
                 />
 
                 <div className='flex justify-between'>
