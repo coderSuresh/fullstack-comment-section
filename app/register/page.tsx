@@ -1,11 +1,14 @@
 'use client'
 import Link from 'next/link'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
 const Register = () => {
 
     const [showPassword1, setShowPassword1] = React.useState(false)
     const [showPassword2, setShowPassword2] = React.useState(false)
+
+    const router = useRouter()
 
     const [errors, setErrors] = React.useState({
         backendError: '',
@@ -39,7 +42,7 @@ const Register = () => {
                             setErrors((errors) => ({ ...errors, backendError: data.error }))
                         }
                         else {
-                            window.location.href = '/login'
+                            router.push('/login')
                         }
                     })
             }
