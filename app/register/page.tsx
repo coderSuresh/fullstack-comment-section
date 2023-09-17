@@ -23,6 +23,23 @@ const Register = () => {
 
         if (e.currentTarget.checkValidity()) {
             validatePasswords()
+
+            if (errors.password === '') {
+                fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                })
+                    .then((res) => {
+                       if(res.ok) return res.json()
+                       else console.log(res)
+                    })
+                    .then((data) => {
+                       console.log(data)
+                    })
+            }
         }
         else {
             e.currentTarget.reportValidity()
