@@ -76,6 +76,9 @@ const Register = () => {
                 ...errors,
                 backendError: '',
             }))
+        
+        formData.name = formData.name.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+        
     }, [formData])
 
     return (
