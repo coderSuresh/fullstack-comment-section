@@ -1,10 +1,11 @@
 import Register from '@/models/auth/Register'
 import { connectDB } from '@/utils/database'
+import bcrypt from 'bcrypt'
 
 const POST = async (req: Request) => {
 
     try {
-        const { name, password, confirmPassword, username } = await req.json()
+        let { name, password, confirmPassword, username } = await req.json()
 
         if (!name || !password || !username) return new Response(JSON.stringify({ error: 'All fields are required' }), {
             headers: { 'Content-Type': 'application/json' },
@@ -31,6 +32,8 @@ const POST = async (req: Request) => {
         if (userWithSameUsername) return new Response(JSON.stringify({ error: 'Username already exists' }), {
             headers: { 'Content-Type': 'application/json' },
         })
+
+        password = await bcrypt.hash(password, 10)
 
         await Register.create({ name, password, username })
 
