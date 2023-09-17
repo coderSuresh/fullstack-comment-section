@@ -65,6 +65,15 @@ const Register = () => {
         validatePasswords()
     }, [formData.password, formData.confirmPassword])
 
+    React.useEffect(() => {
+        return () => {
+            setErrors((errors) => ({
+                ...errors,
+                backendError: '',
+            }))
+        }
+    }, [formData])
+
     return (
         <>
             <h1 className='text-2xl font-semibold mb-5 text-center'>Register</h1>
