@@ -18,6 +18,7 @@ const config: Config = {
         'light-gray': 'var(--light-gray)',
         'very-light-gray': 'var(--very-light-gray)',
         'white': 'var(--white)',
+        'outline-color': 'var(--outline-color)',
       }
     },
   },
