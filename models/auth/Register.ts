@@ -4,12 +4,13 @@ const RegisterSchema = new Schema({
     name: {
         type: String,
         required: [true, 'Please provide a name'],
+        minlength: 3,
     },
 
     password: {
         type: String,
         required: [true, 'Please provide a password'],
-        minlength: 6,
+        minlength: 8,
     },
 
     username: {
