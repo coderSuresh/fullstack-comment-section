@@ -72,12 +72,10 @@ const Register = () => {
     }, [formData.password, formData.confirmPassword])
 
     React.useEffect(() => {
-        return () => {
             setErrors((errors) => ({
                 ...errors,
                 backendError: '',
             }))
-        }
     }, [formData])
 
     return (
