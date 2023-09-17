@@ -14,7 +14,7 @@ const POST = async (req: Request) => {
             headers: { 'Content-Type': 'application/json' },
         })
 
-        if (password.length < 8) return new Response(JSON.stringify({ message: 'Password must be at least 8 characters' }), {    
+        if (password.length < 8) return new Response(JSON.stringify({ message: 'Password must be at least 8 characters' }), {
             headers: { 'Content-Type': 'application/json' },
         })
 
