@@ -26,7 +26,14 @@ const POST = async (req: Request) => {
             headers: { 'Content-Type': 'application/json' },
         })
 
-        return new Response(JSON.stringify({ message: 'User logged in' }), {
+        return new Response(JSON.stringify(
+            {
+                message: 'User logged in',
+                username: dbUserData.username,
+                name: dbUserData.name,
+                isLoggedIn: true,
+            }
+        ), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
         })
