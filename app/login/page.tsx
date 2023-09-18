@@ -2,8 +2,11 @@
 import Link from 'next/link'
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { UserContext } from '@/context/UserContext'
 
 const Login = () => {
+
+    const { values, setValues } = React.useContext(UserContext)
 
     const [showPassword, setShowPassword] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
@@ -33,7 +36,11 @@ const Login = () => {
                         setError(data.error)
                     }
                     else {
-                        router.push('/')
+                        setValues({
+                            name: data.name,
+                            username: data.username,
+                            isLoggedIn: data.isLoggedIn,
+                        })
                     }
                     setLoading(false)
                 })
@@ -42,6 +49,12 @@ const Login = () => {
             e.currentTarget.reportValidity()
         }
     }
+
+    React.useEffect(() => {
+        if (values.isLoggedIn) {
+            router.push('/')
+        }
+    }, [values])
 
     React.useEffect(() => {
         setError('')
