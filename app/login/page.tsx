@@ -100,7 +100,7 @@ const Login = () => {
                     Forgot your password? <Link href='/forgot-password' className='text-moderate-blue'>Reset</Link>
                 </p>
 
-                <button className='bg-moderate-blue outline focus:outline-4 hover:outline-outline-color focus:outline-outline-color uppercase font-medium text-white py-2 rounded-md'>
+                <button disabled={loading} className='bg-moderate-blue outline focus:outline-4 hover:outline-outline-color focus:outline-outline-color uppercase font-medium text-white py-2 rounded-md'>
                     {loading ? <i className='fas fa-spinner fa-spin' /> : 'Login'}
                 </button>
 
