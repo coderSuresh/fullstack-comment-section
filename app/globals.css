@@ -22,3 +22,9 @@ body {
   color: var(--dark-blue);
   background-color: var(--very-light-gray);
 }
+
+@media (max-width: 375px) {
+  html {
+    font-size: 0.825rem;
+  }
+}
