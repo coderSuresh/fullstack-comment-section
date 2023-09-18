@@ -36,11 +36,16 @@ const Login = () => {
                         setError(data.error)
                     }
                     else {
-                        setValues({
+
+                        const userValues = {
                             name: data.name,
                             username: data.username,
                             isLoggedIn: data.isLoggedIn,
-                        })
+                        }
+
+                        setValues(userValues)
+
+                        localStorage.setItem('user', JSON.stringify(userValues))
                     }
                     setLoading(false)
                 })
