@@ -6,7 +6,7 @@ import React from 'react'
 
 const UserProvider = ({ children }: ChildrenProps) => {
 
-  const storedUser = JSON.parse(localStorage.getItem('user') || '{}')
+  const storedUser = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('user') || '{}')
 
   const [values, setValues] = React.useState<UserContextType>(
     {
