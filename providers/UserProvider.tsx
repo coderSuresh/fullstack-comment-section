@@ -8,11 +8,22 @@ const UserProvider = ({ children }: ChildrenProps) => {
 
   const [values, setValues] = React.useState<UserContextType>(
     {
-      name: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!).name : '',
-      username: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!).username : '',
-      isLoggedIn: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!).isLoggedIn : false,
+      name: '',
+      username: '',
+      isLoggedIn: false,
+      loading: true,
     }
   )
+
+  React.useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+
+    if (storedUser) {
+        const parsedValues = JSON.parse(storedUser)
+        setValues(parsedValues);
+    }
+    setValues((prevValues) => ({ ...prevValues, loading: false }))
+  }, [])
 
   return (
     <UserContext.Provider value={{ values, setValues }}>

@@ -12,8 +12,10 @@ const Home = () => {
   const router = useRouter()
 
   const checkIfUserIsLoggedIn = () => {
-    if (!values.isLoggedIn) {
-      router.push('/login')
+    if (!values.loading) {
+      if (!values.isLoggedIn) {
+        router.push('/login')
+      }
     }
   }
 
