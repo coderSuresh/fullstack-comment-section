@@ -6,13 +6,11 @@ import React from 'react'
 
 const UserProvider = ({ children }: ChildrenProps) => {
 
-  const storedUser = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('user') || '{}')
-
   const [values, setValues] = React.useState<UserContextType>(
     {
-      name: storedUser.name || '',
-      username: storedUser.username || '',
-      isLoggedIn: storedUser.isLoggedIn || false,
+      name: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!).name : '',
+      username: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!).username : '',
+      isLoggedIn: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!).isLoggedIn : false,
     }
   )
 

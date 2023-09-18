@@ -23,8 +23,7 @@ const Home = () => {
 
   return (
     <>
-      {
-        values.isLoggedIn &&
+      {values.isLoggedIn ?
         <>
           <header className='md:w-[740px] md:mx-auto md:my-10 flex items-center justify-between gap-5 relative bg-white p-5'>
             <div className='flex gap-5 items-center'>
@@ -53,6 +52,7 @@ const Home = () => {
             <AddComment />
           </main>
         </>
+        : null
       }
     </>
   )
