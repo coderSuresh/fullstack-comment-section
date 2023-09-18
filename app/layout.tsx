@@ -1,6 +1,7 @@
 import { ChildrenProps } from '@/types/props'
 import './globals.css'
 import type { Metadata } from 'next'
+import UserProvider from '@/providers/UserProvider'
 
 export const metadata: Metadata = {
   title: 'Comments | CoderSuresh',
@@ -15,7 +16,11 @@ const RootLayout = ({
       <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
       </head>
-      <body>{children}</body>
+      <body>
+        <UserProvider>
+          {children}
+        </UserProvider>
+      </body>
     </html>
   )
 }
