@@ -33,7 +33,7 @@ const Home = () => {
     <>
       {values.isLoggedIn ?
         <>
-          <header className='md:w-[740px] md:mx-auto md:my-10 flex items-center justify-between gap-5 relative bg-white p-5'>
+          <header className='md:w-[740px] md:mx-auto md:static md:my-10 flex items-center justify-between gap-5 mb-5 absolute top-0 left-0 right-0 bg-white p-5'>
             <div className='flex gap-5 items-center'>
               <Image className='w-12' src='/images/avatars/image-amyrobson.png' height={50} width={50} alt='your profile photo' />
               <div>
@@ -48,7 +48,7 @@ const Home = () => {
             </button>
           </header>
 
-          <main>
+          <main className='md:mt-0 mt-28'>
             {/* TODO: figure out how to upvote once per user per comment */}
             <CommentCard />
             <CommentCard />

@@ -18,7 +18,7 @@ const RootLayout = ({
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
       </head>
-      <body className='md:w-[740px] md:mx-auto mx-3 my-10'>
+      <body className='md:w-[740px] md:mx-auto mx-3 md:my-10'>
         <UserProvider>
           {children}
         </UserProvider>
