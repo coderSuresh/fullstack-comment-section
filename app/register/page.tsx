@@ -77,8 +77,6 @@ const Register = () => {
             backendError: '',
         }))
 
-        formData.name = formData.name.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-
     }, [formData])
 
     return (
@@ -98,7 +96,7 @@ const Register = () => {
                     name='name'
                     value={formData.name}
                     onChange={(e) => setFormData((data) => ({ ...data, name: e.target.value }))}
-                    className='mb-5 p-2 border focus:outline-none focus:border-moderate-blue rounded-md'
+                    className='mb-5 p-2 capitalize border focus:outline-none focus:border-moderate-blue rounded-md'
                     type='text' placeholder='John Doe'
                     pattern='[a-zA-Z ]+'
                     title='Must contain only letters and spaces'
