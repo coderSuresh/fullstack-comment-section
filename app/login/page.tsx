@@ -44,7 +44,6 @@ const Login = () => {
                         }
 
                         setValues(userValues)
-
                         localStorage.setItem('user', JSON.stringify(userValues))
                     }
                     setLoading(false)
@@ -66,7 +65,7 @@ const Login = () => {
     }, [formData])
 
     return (
-        <>
+        <main className='bg-white sm:p-5 p-3 rounded-md'>
             <h1 className='text-2xl font-semibold mb-5 text-center'>Login</h1>
 
             <form onSubmit={(e) => loginUser(e)} className='flex flex-col'>
@@ -109,7 +108,7 @@ const Login = () => {
                 </p>
 
             </form>
-        </>
+        </main>
     )
 }
 
