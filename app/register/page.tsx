@@ -55,7 +55,7 @@ const Register = () => {
         }
     }
 
-    const validatePasswords = () => {
+    const validatePasswords = React.useCallback(() => {
 
         const { password, confirmPassword } = formData
 
@@ -65,20 +65,20 @@ const Register = () => {
         else {
             setErrors((errors) => ({ ...errors, password: '' }))
         }
-    }
+    }, [formData])
 
     React.useEffect(() => {
         validatePasswords()
-    }, [formData.password, formData.confirmPassword])
+    }, [formData.password, formData.confirmPassword, validatePasswords])
 
     React.useEffect(() => {
-            setErrors((errors) => ({
-                ...errors,
-                backendError: '',
-            }))
-        
+        setErrors((errors) => ({
+            ...errors,
+            backendError: '',
+        }))
+
         formData.name = formData.name.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-        
+
     }, [formData])
 
     return (
@@ -131,7 +131,7 @@ const Register = () => {
                         pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
                         title='Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters'
                     />
-                    <button type='button' tabIndex={-1} onClick={() => setShowPassword1((showPassword) => !showPassword)}>
+                    <button type='button' aria-label='toggle password visibility' tabIndex={-1} onClick={() => setShowPassword1((showPassword) => !showPassword)}>
                         <i className={`fas fa-eye${showPassword1 ? '-slash' : ''} absolute right-2 top-3`} />
                     </button>
                 </div>
@@ -146,22 +146,22 @@ const Register = () => {
                         className='mb-5 p-2 w-full border focus:outline-none focus:border-moderate-blue rounded-md'
                         type={`${showPassword2 ? 'text' : 'password'}`} placeholder='xxxxxxxx'
                     />
-                    <button type='button' tabIndex={-1} onClick={() => setShowPassword2((showPassword) => !showPassword)}>
+                    <button type='button' aria-label='toggle password visibility' tabIndex={-1} onClick={() => setShowPassword2((showPassword) => !showPassword)}>
                         <i className={`fas fa-eye${showPassword2 ? '-slash' : ''} absolute right-2 top-3`} />
                     </button>
                 </div>
 
-                <button disabled={loading} className='bg-moderate-blue outline focus:outline-4 hover:outline-outline-color focus:outline-outline-color uppercase font-medium text-white py-2 rounded-md'>
+                <button disabled={loading} aria-label='register button' className='bg-moderate-blue outline focus:outline-4 hover:outline-outline-color focus:outline-outline-color uppercase font-medium text-white py-2 rounded-md'>
                     {
                         loading ?
-                            <i className = 'fas fa-spinner fa-spin' />
+                            <i className='fas fa-spinner fa-spin' />
                             :
                             'Register'
                     }
                 </button>
 
                 <p className='mt-5 text-center'>
-                    Already have an account? <Link href='/login' className='text-moderate-blue'>Login</Link>
+                    Already have an account? <Link href='/login' aria-label='login button' className='text-moderate-blue underline'>Login</Link>
                 </p>
             </form>
         </main>

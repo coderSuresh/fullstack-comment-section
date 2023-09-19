@@ -58,7 +58,7 @@ const Login = () => {
         if (values.isLoggedIn) {
             router.push('/')
         }
-    }, [values])
+    }, [values, router])
 
     React.useEffect(() => {
         setError('')
@@ -104,7 +104,7 @@ const Login = () => {
                 </button>
 
                 <p className='mt-5 text-center'>
-                    Don't have an account? <Link href='/register' className='text-moderate-blue'>Register</Link>
+                    Don&apos;t have an account? <Link href='/register' className='text-moderate-blue'>Register</Link>
                 </p>
 
             </form>

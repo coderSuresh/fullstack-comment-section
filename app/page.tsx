@@ -8,20 +8,26 @@ import { UserContext } from '@/context/UserContext'
 
 const Home = () => {
 
-  const { values } = React.useContext(UserContext)
+  const { values, setValues } = React.useContext(UserContext)
   const router = useRouter()
 
-  const checkIfUserIsLoggedIn = () => {
-    if (!values.loading) {
-      if (!values.isLoggedIn) {
+  React.useEffect(() => {
+    const checkIfUserIsLoggedIn = () => {
+
+      const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null
+
+      if (!storedUser || !storedUser.isLoggedIn) {
         router.push('/login')
       }
     }
-  }
-
-  React.useEffect(() => {
     checkIfUserIsLoggedIn()
-  }, [])
+  }, [router])
+
+  const logOut = () => {
+    localStorage.removeItem('user')
+    setValues({})
+    router.push('/login')
+  }
 
   return (
     <>
@@ -36,13 +42,13 @@ const Home = () => {
               </div>
             </div>
 
-            <button className='flex items-center gap-2 bg-moderate-blue hover:opacity-50 px-4 py-2 rounded-md text-white sm:text-base sm:capitalize text-xs uppercase font-medium'>
+            <button onClick={() => logOut()} className='flex items-center gap-2 bg-moderate-blue hover:opacity-50 px-4 py-2 rounded-md text-white sm:text-base sm:capitalize text-xs uppercase font-medium'>
               <i className='fas fa-sign-out rotate-180' />
               <p>Logout</p>
             </button>
           </header>
 
-          <main className='md:w-[740px] md:mx-auto mx-3 my-10'>
+          <main>
             {/* TODO: figure out how to upvote once per user per comment */}
             <CommentCard />
             <CommentCard />

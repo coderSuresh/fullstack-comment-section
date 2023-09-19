@@ -8,7 +8,7 @@ const Modal = () => {
                     Delete comment
                 </h2>
                 <p className='text-grayish-blue text-sm my-5'>
-                    Are you sure you want to delete this comment? This will remove the comment and can't be undone.
+                    Are you sure you want to delete this comment? This will remove the comment and can&apos;t be undone.
                 </p>
                 <div className='flex gap-3 text-white'>
                     <button className='bg-grayish-blue text-sm rounded-md sm:px-4 p-2 sm:py-3 flex-grow uppercase font-medium hover:opacity-50'>
