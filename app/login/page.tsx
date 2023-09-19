@@ -65,7 +65,7 @@ const Login = () => {
     }, [formData])
 
     return (
-        <main className='bg-white sm:p-5 p-3 rounded-md'>
+        <main className='bg-white sm:p-5 p-3 rounded-md  max-w-md mx-auto'>
             <h1 className='text-2xl font-semibold mb-5 text-center'>Login</h1>
 
             <form onSubmit={(e) => loginUser(e)} className='flex flex-col'>

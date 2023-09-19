@@ -80,7 +80,7 @@ const Register = () => {
     }, [formData])
 
     return (
-        <main className='bg-white sm:p-5 p-5 rounded-md'>
+        <main className='bg-white sm:p-5 p-5 rounded-md max-w-md mx-auto'>
             <h1 className='text-2xl font-semibold mb-5 text-center'>Register</h1>
 
             <form action='#' onSubmit={registerUser} className='flex flex-col'>
