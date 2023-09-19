@@ -11,18 +11,16 @@ const UserProvider = ({ children }: ChildrenProps) => {
       name: '',
       username: '',
       isLoggedIn: false,
-      loading: true,
     }
   )
 
   React.useEffect(() => {
-    const storedUser = localStorage.getItem('user')
+    const storedUser = localStorage.getItem('user') 
 
     if (storedUser) {
         const parsedValues = JSON.parse(storedUser)
         setValues(parsedValues);
     }
-    setValues((prevValues) => ({ ...prevValues, loading: false }))
   }, [])
 
   return (
