@@ -5,11 +5,15 @@ import { useRouter } from 'next/navigation'
 import CommentCard from '@/components/CommentCard'
 import AddComment from '@/components/AddComment'
 import { UserContext } from '@/context/UserContext'
+import { CommentProps } from '@/types/props'
 
 const Home = () => {
 
   const { values, setValues } = React.useContext(UserContext)
   const router = useRouter()
+
+  const [comments, setComments] = React.useState<CommentProps[]>([])
+  const [loading, setLoading] = React.useState(false)
 
   // TODO: localhost data can be tempered for example:
   // if username is changed, and comment posted, the comment will be posted under the new username
@@ -33,6 +37,38 @@ const Home = () => {
     router.push('/login')
   }
 
+  const fetchComments = async () => {
+    setLoading(true)
+    const res = await fetch('/api/get-comments')
+    const data = await res.json()
+
+    if (data.error) {
+      console.log(data.error)
+    }
+
+    setComments(data)
+    setLoading(false)
+    return data
+  }
+
+  React.useEffect(() => {
+    fetchComments()
+  }, [])
+
+  const renderComments = () => {
+    return comments.map((comment: CommentProps) => {
+      return (
+        <div key={comment._id}>
+          <CommentCard {...comment} />
+        </div>
+      )
+    })
+  }
+
+  React.useEffect(() => {
+    console.log(comments)
+  }, [comments])
+
   return (
     <>
       {values.isLoggedIn ?
@@ -53,15 +89,19 @@ const Home = () => {
           </header>
 
           <main className='md:mt-0 mt-28'>
-            {/* TODO: figure out how to upvote once per user per comment */}
-            <CommentCard />
-            <CommentCard />
-            {/* replies */}
-            <div className='border-l sm:pl-10 pl-3 sm:ml-10 '>
-              <CommentCard />
-              <CommentCard />
-            </div>
-            <AddComment />
+            {
+              loading ?
+                <>
+                  <CommentCard loading={loading} />
+                  <CommentCard loading={loading} />
+                  <CommentCard loading={loading} />
+                </>
+                :
+                comments.length > 0 ?
+                  renderComments()
+                  : <p className='text-center text-grayish-blue my-10'>No comments yet</p>
+            }
+            <AddComment setComments={setComments} />
           </main>
         </>
         : null

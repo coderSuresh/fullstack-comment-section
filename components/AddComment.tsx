@@ -2,8 +2,13 @@
 import React from 'react'
 import Image from 'next/image'
 import { UserContext } from '@/context/UserContext'
+import { CommentProps } from '@/types/props'
 
-const AddComment = () => {
+type AddCommentProps = {
+    setComments: React.Dispatch<React.SetStateAction<CommentProps[]>>
+}
+
+const AddComment = ({ setComments }: AddCommentProps) => {
 
     const [comment, setComment] = React.useState('')
     const [commenting, setCommenting] = React.useState(false)
@@ -32,6 +37,8 @@ const AddComment = () => {
             .then(res => res.json())
             .then(data => {
                 setCommenting(false)
+
+                setComments((prev) => [...prev, data.newComment])
                 setComment('')
             })
     }
@@ -39,6 +46,7 @@ const AddComment = () => {
     return (
         <div className='bg-white p-5 text-dark-blue relative rounded-md flex gap-5 mb-5 sm:flex-row items-start'>
             <Image
+                priority
                 src='/images/avatars/image-amyrobson.png'
                 alt='your-avatar' height={50} width={50}
                 className='sm:static sm:w-12 w-10 absolute bottom-5 left-5'
