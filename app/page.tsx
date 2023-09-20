@@ -11,6 +11,10 @@ const Home = () => {
   const { values, setValues } = React.useContext(UserContext)
   const router = useRouter()
 
+  // TODO: localhost data can be tempered for example:
+  // if username is changed, and comment posted, the comment will be posted under the new username
+  // which doesn't exist in the database
+
   React.useEffect(() => {
     const checkIfUserIsLoggedIn = () => {
 
