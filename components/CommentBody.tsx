@@ -47,14 +47,14 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
                     <Image priority src={`/images/avatars/${loading ? 'placeholder.svg' : 'image-amyrobson.webp'}`} alt='user avatar' height={50} width={50} className='w-10 h-10 rounded-full' />
                     <div className='ml-4 flex items-center gap-4'>
                         <div className='flex gap-3 items-center'>
-                            <p className='font-medium'>
+                            <div className='font-medium'>
                                 {
                                     loading ?
                                         <div className='bg-light-gray animate-pulse h-4 w-24 rounded-md'></div>
                                         :
                                         author
                                 }
-                            </p>
+                            </div>
 
                             {/* render if it is user's own comment or reply */}
                             {
@@ -65,7 +65,7 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
                             }
 
                         </div>
-                        <p className='text-grayish-blue text-sm'>
+                        <div className='text-grayish-blue text-sm'>
                             {
                                 loading ?
                                     <div className='bg-light-gray animate-pulse h-4 w-20 rounded-md'></div>
@@ -73,7 +73,7 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
                                     renderTime(createdAt!)
 
                             }
-                        </p>
+                        </div>
                     </div>
                 </div>
 
@@ -82,14 +82,14 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
             </div>
 
             <div className='mt-4'>
-                <p className='text-grayish-blue text-sm leading-5'>
+                <div className='text-grayish-blue text-sm leading-5'>
                     {
                         loading ?
                             <div className='bg-light-gray animate-pulse h-24 w-full rounded-md'></div>
                             :
                             comment
                     }
-                </p>
+                </div>
             </div>
         </div>
     )
