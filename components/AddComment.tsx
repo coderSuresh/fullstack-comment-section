@@ -1,28 +1,36 @@
 'use client'
 import React from 'react'
 import Image from 'next/image'
+import { UserContext } from '@/context/UserContext'
 
 const AddComment = () => {
 
     const [comment, setComment] = React.useState('')
     const [commenting, setCommenting] = React.useState(false)
 
+    const { values } = React.useContext(UserContext)
+
     const postComment = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         setCommenting(true)
 
+        if (!values.username) {
+            alert('Please login to post a comment')
+            setCommenting(false)
+            return
+        }
+
         fetch('/api/post-comment', {
             method: 'POST',
             body: JSON.stringify({
                 comment: comment,
-                author: 'John Doe',
+                author: values.username,
                 createdAt: new Date().toLocaleString(),
             })
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data.message)
                 setCommenting(false)
                 setComment('')
             })
