@@ -65,10 +65,6 @@ const Home = () => {
     })
   }
 
-  React.useEffect(() => {
-    console.log(comments)
-  }, [comments])
-
   return (
     <>
       {values.isLoggedIn ?
