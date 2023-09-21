@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import Image from 'next/image'
 import CommentCardBtns from './CommentCardBtns'
@@ -13,11 +12,8 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
         const postedDateTime = new Date(createdAt)
         const now = new Date()
 
-        // Convert postedDateTime and now to UTC timestamps (milliseconds)
-        const postedTimestamp = postedDateTime.getTime() - postedDateTime.getTimezoneOffset() * 60000
-        const nowTimestamp = now.getTime() - now.getTimezoneOffset() * 60000
-
-        const seconds = Math.floor((nowTimestamp - postedTimestamp) / 1000)
+        const seconds = Math.floor((now.getTime() - postedDateTime.getTime()) / 1000)
+       
         const minutes = Math.floor(seconds / 60)
         const hours = Math.floor(minutes / 60)
         const days = Math.floor(hours / 24)
