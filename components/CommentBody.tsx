@@ -3,42 +3,18 @@ import Image from 'next/image'
 import CommentCardBtns from './CommentCardBtns'
 import { CommentProps } from '@/types/props'
 import { UserContext } from '@/context/UserContext'
+import { formatDistanceToNow } from 'date-fns'
 
 const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
 
     const { values } = React.useContext(UserContext)
 
     const renderTime = (createdAt: Date) => {
-        const postedDateTime = new Date(createdAt)
-        const now = new Date()
+        const timeAgo = formatDistanceToNow(new Date(createdAt), {
+            addSuffix: true,
+        })
 
-        const seconds = Math.floor((now.getTime() - postedDateTime.getTime()) / 1000)
-       
-        const minutes = Math.floor(seconds / 60)
-        const hours = Math.floor(minutes / 60)
-        const days = Math.floor(hours / 24)
-        const weeks = Math.floor(days / 7)
-        const months = Math.floor(days / 30)
-        const years = Math.floor(days / 365)
-
-        switch (true) {
-            case (seconds < 60):
-                return `${seconds} seconds ago`
-            case (minutes < 60):
-                return `${minutes} minutes ago`
-            case (hours < 24):
-                return `${hours} hours ago`
-            case (days < 7):
-                return `${days} days ago`
-            case (weeks < 4):
-                return `${weeks} weeks ago`
-            case (months < 12):
-                return `${months} months ago`
-            case (years >= 1):
-                return `${years} years ago`
-            default:
-                return 'just now'
-        }
+        return timeAgo
     }
 
     return (
