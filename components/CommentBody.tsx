@@ -14,7 +14,7 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
         //     addSuffix: true,
         // })
 
-        return createdAt
+        return new Date(createdAt).toLocaleString()
     }
 
     return (
