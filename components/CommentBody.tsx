@@ -10,11 +10,11 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
     const { values } = React.useContext(UserContext)
 
     const renderTime = (createdAt: Date) => {
-        const timeAgo = formatDistanceToNow(new Date(createdAt), {
-            addSuffix: true,
-        })
+        // const timeAgo = formatDistanceToNow(new Date(createdAt), {
+        //     addSuffix: true,
+        // })
 
-        return timeAgo
+        return createdAt
     }
 
     return (
