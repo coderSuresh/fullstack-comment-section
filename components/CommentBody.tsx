@@ -9,13 +9,13 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
 
     const { values } = React.useContext(UserContext)
 
-    const renderTime = (createdAt: Date) => {
-        // const timeAgo = formatDistanceToNow(new Date(createdAt), {
-        //     addSuffix: true,
-        // })
+    // const renderTime = (createdAt: Date) => {
+    //     const timeAgo = formatDistanceToNow(new Date(createdAt), {
+    //         addSuffix: true,
+    //     })
 
-        return new Date(createdAt).toLocaleString()
-    }
+    //     return timeAgo
+    // }
 
     return (
         <div className='w-full'>
@@ -47,7 +47,8 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
                                 loading ?
                                     <div className='bg-light-gray animate-pulse h-4 w-20 rounded-md'></div>
                                     :
-                                    renderTime(createdAt!)
+                                // renderTime(createdAt!)
+                                    createdAt?.toString()
 
                             }
                         </div>
