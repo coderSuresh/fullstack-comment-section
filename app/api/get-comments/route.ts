@@ -1,7 +1,7 @@
 import CommentModel from "@/models/Comment"
 import { connectDB } from "@/utils/database"
 
-export const revalidate = 0
+export const revalidate = 0 // this helped getting the latest data from the database
 
 const GET = async () => {
     try {
