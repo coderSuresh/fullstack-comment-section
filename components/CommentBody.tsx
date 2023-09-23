@@ -10,8 +10,7 @@ const CommentBody = ({ author, comment, createdAt, loading }: CommentProps) => {
     const { values } = React.useContext(UserContext)
 
     const renderTime = (createdAt: Date) => {
-        const utcDate = new Date(createdAt).toUTCString();
-        const timeAgo = formatDistanceToNow(new Date(utcDate), {
+        const timeAgo = formatDistanceToNow(new Date(createdAt), {
             addSuffix: true,
         })
 

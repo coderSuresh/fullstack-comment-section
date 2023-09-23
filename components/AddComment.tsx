@@ -31,7 +31,7 @@ const AddComment = ({ setComments }: AddCommentProps) => {
             body: JSON.stringify({
                 comment: comment,
                 author: values.username,
-                createdAt: new Date().toLocaleString(),
+                createdAt: new Date(),
             })
         })
             .then(res => res.json())
