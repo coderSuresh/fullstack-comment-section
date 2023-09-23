@@ -4,7 +4,7 @@ import { connectDB } from "@/utils/database"
 const GET = async () => {
     try {
         await connectDB()
-        const comments = await CommentModel.find()
+        const comments = await CommentModel.find({})
 
         if (!comments) {
             return new Response(JSON.stringify({ error: "No comments found" }))
