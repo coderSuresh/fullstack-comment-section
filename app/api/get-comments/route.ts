@@ -1,6 +1,8 @@
 import CommentModel from "@/models/Comment"
 import { connectDB } from "@/utils/database"
 
+export const revalidate = 0
+
 const GET = async () => {
     try {
         await connectDB()
