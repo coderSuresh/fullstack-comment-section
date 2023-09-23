@@ -39,7 +39,9 @@ const Home = () => {
 
   const fetchComments = async () => {
     setLoading(true)
-    const res = await fetch('/api/get-comments')
+    const res = await fetch('/api/get-comments', {
+      cache: 'no-store',
+    })
     const data = await res.json()
 
     if (data.error) {
