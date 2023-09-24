@@ -13,17 +13,16 @@ const PUT = async (req: Request) => {
         })
 
         await connectDB()
-
+        
         try {
             await CommentModel.updateOne(
-                { _id: replyObj.commentId },
+                { _id: replyObj.commentID },
                 { $push: { replies: replyToBeAdded } }
             )
+            return new Response(JSON.stringify({ message: "Reply added successfully" }))
         } catch (err) {
             return new Response(JSON.stringify({ error: "Something went wrong!" }))
         }
-
-        return new Response(JSON.stringify({ message: "Reply added successfully" }))
     }
     catch (err) {
         return new Response(JSON.stringify({ error: "Sorry, " + err }))
