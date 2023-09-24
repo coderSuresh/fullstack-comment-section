@@ -48,8 +48,6 @@ const Home = () => {
       console.log(data.error)
     }
 
-    console.log(data)
-
     setComments(data)
     setLoading(false)
     return data
