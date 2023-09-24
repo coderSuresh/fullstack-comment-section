@@ -5,11 +5,14 @@ import { useRouter } from 'next/navigation'
 import CommentCard from '@/components/CommentCard'
 import AddComment from '@/components/AddComment'
 import { UserContext } from '@/context/UserContext'
+import { ReplyContext } from '@/context/ReplyContext'
 import { CommentProps } from '@/types/props'
+import AddReply from '@/components/AddReply'
 
 const Home = () => {
 
   const { values, setValues } = React.useContext(UserContext)
+  const { reply, setReply } = React.useContext(ReplyContext)
   const router = useRouter()
 
   const [comments, setComments] = React.useState<CommentProps[]>([])
@@ -62,10 +65,17 @@ const Home = () => {
       return (
         <div key={comment._id}>
           <CommentCard {...comment} />
+          {(reply.isReplying && reply.replyTo === comment.author) &&
+            <AddReply author={comment.author} _id={comment._id} />
+          }
         </div>
       )
     })
   }
+
+  React.useEffect(() => {
+    renderComments()
+  }, [reply])
 
   return (
     <>

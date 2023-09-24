@@ -2,6 +2,7 @@ import { ChildrenProps } from '@/types/props'
 import './globals.css'
 import type { Metadata } from 'next'
 import UserProvider from '@/providers/UserProvider'
+import ReplyProvider from '@/providers/ReplyProvider'
 
 export const metadata: Metadata = {
   title: 'Comments | CoderSuresh',
@@ -20,7 +21,9 @@ const RootLayout = ({
       </head>
       <body className='md:w-[740px] md:mx-auto mx-3 md:my-10'>
         <UserProvider>
-          {children}
+          <ReplyProvider>
+            {children}
+          </ReplyProvider>
         </UserProvider>
       </body>
     </html>
