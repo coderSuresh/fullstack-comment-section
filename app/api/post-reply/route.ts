@@ -13,7 +13,7 @@ const PUT = async (req: Request) => {
         })
 
         await connectDB()
-        
+
         try {
             await CommentModel.updateOne(
                 { _id: replyObj.commentID },

@@ -8,4 +8,7 @@ export type CommentProps = {
     author?: string,
     createdAt?: Date,
     loading?: boolean,
+    replies?: [],
+    replyTo?: string,
+    isReplying?: boolean,
 };

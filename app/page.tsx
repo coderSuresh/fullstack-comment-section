@@ -62,12 +62,38 @@ const Home = () => {
 
   const renderComments = () => {
     return comments.map((comment: CommentProps) => {
+
+      let replyElems = null
+
+      if (comment.replies?.length! > 0) {
+        replyElems = comment.replies?.map((reply: string) => {
+
+          const replyObj = JSON.parse(reply) as CommentProps
+
+          return (
+            <div key={replyObj._id}>
+              <CommentCard {...JSON.parse(reply)} />
+              {(replyObj.isReplying && replyObj.replyTo === comment.author) &&
+                <AddReply author={comment.author} _id={comment._id} />
+              }
+            </div>
+          )
+        })
+      }
+
       return (
         <div key={comment._id}>
           <CommentCard {...comment} />
           {(reply.isReplying && reply.replyTo === comment.author) &&
             <AddReply author={comment.author} _id={comment._id} />
           }
+
+          {comment.replies?.length! > 0 &&
+            <div className='border-l sm:pl-10 pl-3 sm:ml-10 '>
+              {replyElems}
+            </div>
+          }
+
         </div>
       )
     })
