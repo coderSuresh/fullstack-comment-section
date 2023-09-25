@@ -72,7 +72,7 @@ const Home = () => {
 
           return (
             <div key={replyObj._id}>
-              <CommentCard {...JSON.parse(reply)} />
+              <CommentCard {...replyObj} />
               {(replyObj.isReplying && replyObj.replyTo === comment.author) &&
                 <AddReply author={comment.author} _id={comment._id} />
               }
