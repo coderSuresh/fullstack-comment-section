@@ -99,10 +99,6 @@ const Home = () => {
     })
   }
 
-  React.useEffect(() => {
-    renderComments()
-  }, [reply])
-
   return (
     <>
       {values.isLoggedIn ?
