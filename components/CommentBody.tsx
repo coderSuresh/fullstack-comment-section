@@ -5,7 +5,7 @@ import { CommentProps } from '@/types/props'
 import { UserContext } from '@/context/UserContext'
 import { formatDistanceToNow } from 'date-fns'
 
-const CommentBody = ({ _id, author, comment, createdAt, loading }: CommentProps) => {
+const CommentBody = ({ _id, author, replyTo, comment, createdAt, loading }: CommentProps) => {
 
     const { values } = React.useContext(UserContext)
 
@@ -63,7 +63,11 @@ const CommentBody = ({ _id, author, comment, createdAt, loading }: CommentProps)
                         loading ?
                             <div className='bg-light-gray animate-pulse h-24 w-full rounded-md'></div>
                             :
-                            comment
+                            replyTo &&
+                            <span className='font-medium text-moderate-blue'>@{replyTo} </span>
+                    }
+                    {
+                        comment
                     }
                 </div>
             </div>
