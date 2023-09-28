@@ -5,6 +5,7 @@ export type ChildrenProps = {
 export type CommentProps = {
     _id?: string,
     comment?: string,
+    commentID?: string,
     author?: string,
     createdAt?: Date,
     loading?: boolean,

@@ -66,15 +66,15 @@ const Home = () => {
       let replyElems = null
 
       if (comment.replies?.length! > 0) {
-        replyElems = comment.replies?.map((reply: string) => {
+        replyElems = comment.replies?.map((r: string) => {
 
-          const replyObj = JSON.parse(reply) as CommentProps
+          const replyObj = JSON.parse(r) as CommentProps
 
           return (
             <div key={replyObj._id}>
               <CommentCard {...replyObj} />
-              {(replyObj.isReplying && replyObj.replyTo === comment.author) &&
-                <AddReply author={comment.author} _id={comment._id} />
+              {(reply.isReplying && reply.commentID === replyObj._id) &&
+                <AddReply author={replyObj.author} _id={replyObj._id} />
               }
             </div>
           )
