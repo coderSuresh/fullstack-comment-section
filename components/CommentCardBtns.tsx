@@ -11,6 +11,7 @@ const CommentCardBtns = ({ _id, author }: CommentProps) => {
         setReply({
             isReplying: !reply.isReplying,
             replyTo: author,
+            commentID: _id,
             reply: '',
         })
     }

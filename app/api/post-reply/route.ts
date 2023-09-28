@@ -1,14 +1,17 @@
 import CommentModel from "@/models/Comment"
 import { connectDB } from "@/utils/database"
+import mongoose from "mongoose"
 
 const PUT = async (req: Request) => {
     try {
         const replyObj = await req.json()
 
         const replyToBeAdded = JSON.stringify({
+            _id: new mongoose.Types.ObjectId(),
             comment: replyObj.comment,
             createdAt: replyObj.createdAt,
             replyTo: replyObj.replyTo,
+            commendID: replyObj.commentID,
             author: replyObj.author,
         })
 

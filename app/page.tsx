@@ -84,7 +84,7 @@ const Home = () => {
       return (
         <div key={comment._id}>
           <CommentCard {...comment} />
-          {(reply.isReplying && reply.replyTo === comment.author) &&
+          {(reply.isReplying && reply.commentID === comment._id) &&
             <AddReply author={comment.author} _id={comment._id} />
           }
 
