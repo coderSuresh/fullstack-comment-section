@@ -11,7 +11,7 @@ const PUT = async (req: Request) => {
             comment: replyObj.comment,
             createdAt: replyObj.createdAt,
             replyTo: replyObj.replyTo,
-            commendID: replyObj.commentID,
+            commentID: replyObj.commentID,
             author: replyObj.author,
             score: 0,
         })
