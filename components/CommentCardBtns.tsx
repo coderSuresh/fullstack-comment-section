@@ -7,11 +7,9 @@ const CommentCardBtns = ({ _id, author }: CommentProps) => {
     const { reply, setReply } = React.useContext(ReplyContext)
 
     const changeReplyContext = () => {
-
         setReply({
-            isReplying: !reply.isReplying,
             replyTo: author,
-            commentID: _id,
+            commentID: reply.commentID === _id ? '' : _id,
             reply: '',
         })
     }

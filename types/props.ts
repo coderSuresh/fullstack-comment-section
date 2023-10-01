@@ -11,5 +11,4 @@ export type CommentProps = {
     loading?: boolean,
     replies?: [],
     replyTo?: string,
-    isReplying?: boolean,
 };
