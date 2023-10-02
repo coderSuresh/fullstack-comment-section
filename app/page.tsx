@@ -66,9 +66,7 @@ const Home = () => {
       let replyElems = null
 
       if (comment.replies?.length! > 0) {
-        replyElems = comment.replies?.map((r: string) => {
-
-          const replyObj = JSON.parse(r) as CommentProps
+        replyElems = comment.replies?.map((replyObj: CommentProps) => {
 
           return (
             <div key={replyObj._id}>

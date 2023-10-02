@@ -6,7 +6,7 @@ const PUT = async (req: Request) => {
     try {
         const replyObj = await req.json()
 
-        const replyToBeAdded = JSON.stringify({
+        const replyToBeAdded = {
             _id: new mongoose.Types.ObjectId(),
             comment: replyObj.comment,
             createdAt: replyObj.createdAt,
@@ -14,7 +14,7 @@ const PUT = async (req: Request) => {
             commentID: replyObj.commentID,
             author: replyObj.author,
             score: 0,
-        })
+        }
 
         await connectDB()
 
