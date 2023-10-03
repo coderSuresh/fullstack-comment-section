@@ -43,9 +43,14 @@ const UpvoteDownvote = ({ _id, score, author, commentID }: CommentProps) => {
             .then(res => res.json())
             .then(data => {
 
-                if (data.error) alert(data.error)
-
                 setVoting(false)
+
+                if (data.error) {
+                    alert(data.error)
+                    return
+                }
+
+                setVote(data.score)
             })
     }
 

@@ -6,6 +6,7 @@ const PUT = async (req: Request) => {
     try {
 
         const { vote, id, commentID, username, author } = await req.json()
+        let userId;
 
         await connectDB()
 
@@ -15,8 +16,8 @@ const PUT = async (req: Request) => {
             )
 
             if (!user) return new Response(JSON.stringify({ 'error': 'Please login to continue!' }))
-
-            if(user.username === author) return new Response(JSON.stringify({ 'error': 'You cannot vote on your own comment!' }))
+            if (user.username === author) return new Response(JSON.stringify({ 'error': 'You cannot vote on your own comment!' }))
+            userId = user._id
 
         } catch (err) {
             return new Response(JSON.stringify({ 'error': 'Please login to continue!' }))
@@ -30,17 +31,19 @@ const PUT = async (req: Request) => {
 
             if (vote === 'up') {
                 comment.score++
+                comment.upVotedBy.push(userId)
             }
             else if (vote === 'down') {
                 comment.score--
+                comment.downVotedBy.push(userId)
             }
 
             const updated = await CommentModel.updateOne(
                 { '_id': id },
-                { $set: { score: comment.score } }
+                { $set: { score: comment.score, upVotedBy: comment.upVotedBy, downVotedBy: comment.downVotedBy } }
             )
 
-            if (updated.modifiedCount) return new Response(JSON.stringify({ 'success': 'Vote updated!' }))
+            if (updated.modifiedCount) return new Response(JSON.stringify({ 'success': 'Vote updated!', 'score': comment.score }))
             else return new Response(JSON.stringify({ 'error': 'Could not update vote. Please try again!' }))
         } catch (err) {
             // if it is a reply
@@ -54,8 +57,10 @@ const PUT = async (req: Request) => {
 
             if (vote === 'up') {
                 replies[replyIndex].score++
+                replies[replyIndex].upVotedBy.push(userId)
             } else if (vote === 'down') {
                 replies[replyIndex].score--
+                replies[replyIndex].downVotedBy.push(userId)
             }
 
             const updated = await CommentModel.updateOne(
@@ -63,12 +68,12 @@ const PUT = async (req: Request) => {
                 { $set: { replies: replies } }
             )
 
-            if (updated.modifiedCount) return new Response(JSON.stringify({ 'success': 'Vote updated!' }))
+            if (updated.modifiedCount) return new Response(JSON.stringify({ 'success': 'Vote updated!', 'score': replies[replyIndex].score }))
             else return new Response(JSON.stringify({ 'error': 'Could not update vote. Please try again!' }))
         }
 
     } catch (err) {
-        return new Response(JSON.stringify({ 'error': 'Could not update vote. Please try again!' }))
+        return new Response(JSON.stringify({ 'error': 'Could not update vote. Please try again!' + err }))
     }
 }
 

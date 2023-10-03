@@ -17,7 +17,11 @@ const CommentSchema = new Schema({
         type: Number,
         default: 0
     },
-    votedBy: {
+    upVotedBy: {
+        type: Array,
+        default: []
+    },
+    downVotedBy: {
         type: Array,
         default: []
     },
