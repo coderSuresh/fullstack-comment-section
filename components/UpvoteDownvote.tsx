@@ -10,15 +10,6 @@ const UpvoteDownvote = ({ _id, score, author, commentID }: CommentProps) => {
 
     const { values } = React.useContext(UserContext)
 
-    // TODO: implement real upvote system
-    /*
-        * it should have backend so that it can't be altered.
-        * one user can upvote one comment/reply only one time.
-        * and if the user clicks upvote/downvote again, show some alert telling it can't be done twice.
-        * one can't upvote his own comment/reply 
-        * but how to store data on database and how to validate???
-    */
-
     const handleUpvote = () => {
         updateDBWithNewVote('up')
     }
