@@ -66,6 +66,9 @@ const Home = () => {
       let replyElems = null
 
       if (comment.replies?.length! > 0) {
+        // TODO: show replies instantly after posting
+        // TODO: maybe it is better to show reply below the original
+        // comment or reply instead of showing it at the bottom
         replyElems = comment.replies?.map((replyObj: CommentProps) => {
 
           return (
