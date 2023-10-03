@@ -1,7 +1,6 @@
 import CommentModel from "@/models/Comment"
 import Register from "@/models/auth/Register"
 import { connectDB } from "@/utils/database"
-import { fi } from "date-fns/locale"
 
 const PUT = async (req: Request) => {
     try {
