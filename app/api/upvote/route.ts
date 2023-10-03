@@ -30,28 +30,28 @@ const PUT = async (req: Request) => {
             )
 
             if (vote === 'up') {
-
-                if (comment.downVotedBy.includes(userId)) {
-                    comment.downVotedBy.splice(comment.downVotedBy.indexOf(userId), 1)
-                }
-
                 if (comment.upVotedBy.includes(userId))
                     return new Response(JSON.stringify({ 'error': 'You have already upvoted this comment!' }))
 
-                comment.score++
-                comment.upVotedBy.push(userId)
+                if (comment.downVotedBy.includes(userId)) {
+                    comment.score++
+                    comment.downVotedBy.splice(comment.downVotedBy.indexOf(userId), 1)
+                } else {
+                    comment.score++
+                    comment.upVotedBy.push(userId)
+                }
             }
             else if (vote === 'down') {
-
-                if (comment.upVotedBy.includes(userId)) {
-                    comment.upVotedBy.splice(comment.upVotedBy.indexOf(userId), 1)
-                }
-
                 if (comment.downVotedBy.includes(userId))
                     return new Response(JSON.stringify({ 'error': 'You have already downvoted this comment!' }))
 
-                comment.score--
-                comment.downVotedBy.push(userId)
+                if (comment.upVotedBy.includes(userId)) {
+                    comment.score--
+                    comment.upVotedBy.splice(comment.upVotedBy.indexOf(userId), 1)
+                } else {
+                    comment.score--
+                    comment.downVotedBy.push(userId)
+                }
             }
 
             const updated = await CommentModel.updateOne(
@@ -73,26 +73,29 @@ const PUT = async (req: Request) => {
 
             if (vote === 'up') {
 
-                if (replies[replyIndex].downVotedBy.includes(userId)) {
-                    replies[replyIndex].downVotedBy.splice(replies[replyIndex].downVotedBy.indexOf(userId), 1)
-                }
-
                 if (replies[replyIndex].upVotedBy.includes(userId))
                     return new Response(JSON.stringify({ 'error': 'You have already upvoted this reply!' }))
 
-                replies[replyIndex].score++
-                replies[replyIndex].upVotedBy.push(userId)
-            } else if (vote === 'down') {
-
-                if (replies[replyIndex].upVotedBy.includes(userId)) {
-                    replies[replyIndex].upVotedBy.splice(replies[replyIndex].upVotedBy.indexOf(userId), 1)
+                if (replies[replyIndex].downVotedBy.includes(userId)) {
+                    replies[replyIndex].score++
+                    replies[replyIndex].downVotedBy.splice(replies[replyIndex].downVotedBy.indexOf(userId), 1)
+                } else {
+                    replies[replyIndex].score++
+                    replies[replyIndex].upVotedBy.push(userId)
                 }
+            } else if (vote === 'down') {
 
                 if (replies[replyIndex].downVotedBy.includes(userId))
                     return new Response(JSON.stringify({ 'error': 'You have already downvoted this reply!' }))
 
-                replies[replyIndex].score--
-                replies[replyIndex].downVotedBy.push(userId)
+
+                if (replies[replyIndex].upVotedBy.includes(userId)) {
+                    replies[replyIndex].score--
+                    replies[replyIndex].upVotedBy.splice(replies[replyIndex].upVotedBy.indexOf(userId), 1)
+                } else {
+                    replies[replyIndex].score--
+                    replies[replyIndex].downVotedBy.push(userId)
+                }
             }
 
             const updated = await CommentModel.updateOne(
