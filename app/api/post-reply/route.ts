@@ -14,6 +14,8 @@ const PUT = async (req: Request) => {
             commentID: replyObj.commentID,
             author: replyObj.author,
             score: 0,
+            upVotedBy: [],
+            downVotedBy: [],
         }
 
         await connectDB()
