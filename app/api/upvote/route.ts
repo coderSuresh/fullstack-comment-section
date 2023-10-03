@@ -6,7 +6,7 @@ const PUT = async (req: Request) => {
     try {
 
         const { vote, id, commentID, username, author } = await req.json()
-        let userId;
+        let userId: string;
 
         await connectDB()
 
@@ -23,6 +23,8 @@ const PUT = async (req: Request) => {
             return new Response(JSON.stringify({ 'error': 'Please login to continue!' }))
         }
 
+        const dotSomeLogic = (id: string) => id.toString() === userId.toString()
+
         try {
             // if it is a comment
             let comment = await CommentModel.findOne(
@@ -30,10 +32,11 @@ const PUT = async (req: Request) => {
             )
 
             if (vote === 'up') {
-                if (comment.upVotedBy.includes(userId))
+                if (comment.upVotedBy.some(dotSomeLogic)) {
                     return new Response(JSON.stringify({ 'error': 'You have already upvoted this comment!' }))
+                }
 
-                if (comment.downVotedBy.includes(userId)) {
+                if (comment.downVotedBy.some(dotSomeLogic)) {
                     comment.score++
                     comment.downVotedBy.splice(comment.downVotedBy.indexOf(userId), 1)
                 } else {
@@ -42,10 +45,10 @@ const PUT = async (req: Request) => {
                 }
             }
             else if (vote === 'down') {
-                if (comment.downVotedBy.includes(userId))
+                if (comment.downVotedBy.some(dotSomeLogic))
                     return new Response(JSON.stringify({ 'error': 'You have already downvoted this comment!' }))
 
-                if (comment.upVotedBy.includes(userId)) {
+                if (comment.upVotedBy.some(dotSomeLogic)) {
                     comment.score--
                     comment.upVotedBy.splice(comment.upVotedBy.indexOf(userId), 1)
                 } else {
@@ -69,14 +72,14 @@ const PUT = async (req: Request) => {
 
             let replies = comment.replies
 
-            const replyIndex = replies.findIndex((reply: any) => reply._id.toString() === id)
+            const replyIndex = replies.findIndex((reply: any) => reply._id.toString() === id) as number
 
             if (vote === 'up') {
 
-                if (replies[replyIndex].upVotedBy.includes(userId))
+                if (replies[replyIndex].upVotedBy.some(dotSomeLogic))
                     return new Response(JSON.stringify({ 'error': 'You have already upvoted this reply!' }))
 
-                if (replies[replyIndex].downVotedBy.includes(userId)) {
+                if (replies[replyIndex].downVotedBy.some(dotSomeLogic)) {
                     replies[replyIndex].score++
                     replies[replyIndex].downVotedBy.splice(replies[replyIndex].downVotedBy.indexOf(userId), 1)
                 } else {
@@ -85,11 +88,11 @@ const PUT = async (req: Request) => {
                 }
             } else if (vote === 'down') {
 
-                if (replies[replyIndex].downVotedBy.includes(userId))
+                if (replies[replyIndex].downVotedBy.some(dotSomeLogic))
                     return new Response(JSON.stringify({ 'error': 'You have already downvoted this reply!' }))
 
 
-                if (replies[replyIndex].upVotedBy.includes(userId)) {
+                if (replies[replyIndex].upVotedBy.some(dotSomeLogic)) {
                     replies[replyIndex].score--
                     replies[replyIndex].upVotedBy.splice(replies[replyIndex].upVotedBy.indexOf(userId), 1)
                 } else {
