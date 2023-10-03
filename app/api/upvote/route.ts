@@ -1,12 +1,26 @@
 import CommentModel from "@/models/Comment"
+import Register from "@/models/auth/Register"
 import { connectDB } from "@/utils/database"
 
 const PUT = async (req: Request) => {
     try {
 
-        const { vote, id, commentID } = await req.json()
+        const { vote, id, commentID, username, author } = await req.json()
 
         await connectDB()
+
+        try {
+            const user = await Register.findOne(
+                { 'username': username },
+            )
+
+            if (!user) return new Response(JSON.stringify({ 'error': 'Please login to continue!' }))
+
+            if(user.username === author) return new Response(JSON.stringify({ 'error': 'You cannot vote on your own comment!' }))
+
+        } catch (err) {
+            return new Response(JSON.stringify({ 'error': 'Please login to continue!' }))
+        }
 
         try {
             // if it is a comment

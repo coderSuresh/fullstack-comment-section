@@ -1,11 +1,14 @@
 'use client'
+import { UserContext } from '@/context/UserContext'
 import { CommentProps } from '@/types/props'
 import React from 'react'
 
-const UpvoteDownvote = ({ _id, score, commentID }: CommentProps) => {
+const UpvoteDownvote = ({ _id, score, author, commentID }: CommentProps) => {
 
     const [vote, setVote] = React.useState(score || 0)
     const [voting, setVoting] = React.useState(false)
+
+    const { values } = React.useContext(UserContext)
 
     // TODO: implement real upvote system
     /*
@@ -17,12 +20,10 @@ const UpvoteDownvote = ({ _id, score, commentID }: CommentProps) => {
     */
 
     const handleUpvote = () => {
-        setVote(prevVote => prevVote + 1)
         updateDBWithNewVote('up')
     }
 
     const handleDownVote = () => {
-        setVote(prevVote => prevVote > 0 ? prevVote - 1 : 0)
         updateDBWithNewVote('down')
     }
 
@@ -30,7 +31,14 @@ const UpvoteDownvote = ({ _id, score, commentID }: CommentProps) => {
         setVoting(true)
         fetch('/api/upvote', {
             method: 'PUT',
-            body: JSON.stringify({ 'vote': upOrDownVote, 'id': _id, 'commentID': commentID })
+            body: JSON.stringify(
+                {
+                    'vote': upOrDownVote,
+                    'id': _id,
+                    'commentID': commentID,
+                    'username': values.username,
+                    'author': author
+                })
         })
             .then(res => res.json())
             .then(data => {
@@ -50,7 +58,9 @@ const UpvoteDownvote = ({ _id, score, commentID }: CommentProps) => {
                 <i className='fas fa-plus'></i>
             </button>
 
-            <p className='text-moderate-blue font-medium my-3'>{vote}</p>
+            <p className='text-moderate-blue font-medium my-3'>
+                {voting ? '..' : vote}
+            </p>
 
             <button
                 aria-label='downvote'

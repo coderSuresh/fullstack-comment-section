@@ -17,6 +17,10 @@ const CommentSchema = new Schema({
         type: Number,
         default: 0
     },
+    votedBy: {
+        type: Array,
+        default: []
+    },
     replies: {
         type: Array,
         default: []
