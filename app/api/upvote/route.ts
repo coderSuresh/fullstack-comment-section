@@ -49,7 +49,7 @@ const PUT = async (req: Request) => {
                 { $set: { replies: replies } }
             )
 
-            if (updated) return new Response(JSON.stringify({ 'success': 'Vote updated!' }))
+            if (updated.modifiedCount) return new Response(JSON.stringify({ 'success': 'Vote updated!' }))
             else return new Response(JSON.stringify({ 'error': 'Could not update vote. Please try again!' }))
         }
 
