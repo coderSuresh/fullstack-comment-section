@@ -60,13 +60,26 @@ const Home = () => {
     fetchComments()
   }, [])
 
+  const addReplyToComment = (commentId: string, newReply: CommentProps) => {
+    setComments((prevComments: any) => [
+      ...prevComments.map((comment: CommentProps) => {
+        if (comment._id === commentId) {
+          return {
+            ...comment,
+            replies: comment.replies ? [...comment.replies, newReply] : [newReply]
+          }
+        }
+        return comment
+      })
+    ])
+  }
+
   const renderComments = () => {
     return comments.map((comment: CommentProps) => {
 
       let replyElems = null
 
       if (comment.replies?.length! > 0) {
-        // TODO: show replies instantly after posting
         // TODO: maybe it is better to show reply below the original
         // comment or reply instead of showing it at the bottom
         replyElems = comment.replies?.map((replyObj: CommentProps) => {
@@ -75,7 +88,7 @@ const Home = () => {
             <div key={replyObj._id}>
               <CommentCard {...replyObj} />
               {(reply.commentID === replyObj._id) &&
-                <AddReply author={replyObj.author} _id={comment._id} />
+                <AddReply addReplyToComment={addReplyToComment} author={replyObj.author} _id={comment._id} />
               }
             </div>
           )
@@ -86,7 +99,7 @@ const Home = () => {
         <div key={comment._id}>
           <CommentCard {...comment} />
           {(reply.commentID === comment._id) &&
-            <AddReply author={comment.author} _id={comment._id} />
+            <AddReply addReplyToComment={addReplyToComment} author={comment.author} _id={comment._id} />
           }
 
           {comment.replies?.length! > 0 &&

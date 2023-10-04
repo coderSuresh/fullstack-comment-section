@@ -13,3 +13,9 @@ export type CommentProps = {
     score?: number,
     replyTo?: string,
 };
+
+export type ReplyProps = {
+    _id?: string,
+    author?: string,
+    addReplyToComment: (commentId: string, newReply: CommentProps) => void,
+};

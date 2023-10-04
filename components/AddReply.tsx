@@ -3,15 +3,15 @@ import React from 'react'
 import Image from 'next/image'
 import { UserContext } from '@/context/UserContext'
 import { ReplyContext } from '@/context/ReplyContext'
-import { CommentProps } from '@/types/props'
+import { ReplyProps } from '@/types/props'
 
-const AddReply = ({ author, _id }: CommentProps) => {
+const AddReply = ({ author, _id, addReplyToComment }: ReplyProps) => {
 
     const [comment, setComment] = React.useState('')
     const [commenting, setCommenting] = React.useState(false)
 
     const { values } = React.useContext(UserContext)
-    const { reply, setReply } = React.useContext(ReplyContext)
+    const { setReply } = React.useContext(ReplyContext)
 
     const postComment = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -46,6 +46,7 @@ const AddReply = ({ author, _id }: CommentProps) => {
 
                 setCommenting(false)
                 setReply(replyObj)
+                addReplyToComment(_id!, data.newReply)
                 setComment('')
             })
     }

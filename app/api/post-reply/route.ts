@@ -25,7 +25,7 @@ const PUT = async (req: Request) => {
                 { _id: replyObj.commentID },
                 { $push: { replies: replyToBeAdded } }
             )
-            return new Response(JSON.stringify({ message: "Reply added successfully" }))
+            return new Response(JSON.stringify({ message: "Reply added successfully", newReply: replyToBeAdded }))
         } catch (err) {
             return new Response(JSON.stringify({ error: "Something went wrong!" }))
         }
