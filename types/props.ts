@@ -7,6 +7,7 @@ export type CommentProps = {
     comment?: string,
     commentID?: string,
     author?: string,
+    userId?: string,
     createdAt?: Date,
     loading?: boolean,
     replies?: [],

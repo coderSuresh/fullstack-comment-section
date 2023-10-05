@@ -88,7 +88,7 @@ const Home = () => {
 
           return (
             <div key={replyObj._id}>
-              <CommentCard {...replyObj} />
+              <CommentCard {...replyObj} userId={values.id} />
               {(reply.commentID === replyObj._id) &&
                 <AddReply addReplyToComment={addReplyToComment} author={replyObj.author} _id={comment._id} />
               }
@@ -99,7 +99,7 @@ const Home = () => {
 
       return (
         <div key={comment._id}>
-          <CommentCard {...comment} />
+          <CommentCard {...comment} userId={values.id} />
           {(reply.commentID === comment._id) &&
             <AddReply addReplyToComment={addReplyToComment} author={comment.author} _id={comment._id} />
           }

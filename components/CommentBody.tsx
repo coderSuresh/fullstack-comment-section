@@ -5,7 +5,7 @@ import { CommentProps } from '@/types/props'
 import { UserContext } from '@/context/UserContext'
 import { formatDistanceToNow } from 'date-fns'
 
-const CommentBody = ({ _id, author, replyTo, comment, createdAt, loading }: CommentProps) => {
+const CommentBody = ({ _id, author, userId, replyTo, comment, createdAt, loading }: CommentProps) => {
 
     const { values } = React.useContext(UserContext)
 
@@ -53,7 +53,7 @@ const CommentBody = ({ _id, author, replyTo, comment, createdAt, loading }: Comm
                     </div>
                 </div>
 
-                <CommentCardBtns _id={_id} author={author} />
+                <CommentCardBtns _id={_id} userId={userId} author={author} />
 
             </div>
 
