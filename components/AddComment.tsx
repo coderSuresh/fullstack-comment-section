@@ -29,6 +29,7 @@ const AddComment = ({ setComments }: AddCommentProps) => {
         fetch('/api/post-comment', {
             method: 'POST',
             body: JSON.stringify({
+                userId: values.id,
                 comment: comment,
                 author: values.username,
                 createdAt: new Date(),
@@ -36,7 +37,13 @@ const AddComment = ({ setComments }: AddCommentProps) => {
         })
             .then(res => res.json())
             .then(data => {
+
                 setCommenting(false)
+
+                if (data.error) {
+                    console.log(data.error)
+                    return
+                }
 
                 setComments((prev) => [...prev, data.newComment])
                 setComment('')

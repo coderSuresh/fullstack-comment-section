@@ -46,13 +46,15 @@ const Home = () => {
       cache: 'no-store',
     })
     const data = await res.json()
+    
+    setLoading(false)
 
     if (data.error) {
       console.log(data.error)
+      return
     }
 
     setComments(data)
-    setLoading(false)
     return data
   }
 
