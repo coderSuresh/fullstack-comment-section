@@ -26,11 +26,14 @@ const POST = async (req: Request) => {
             headers: { 'Content-Type': 'application/json' },
         })
 
+        const hashedId = await bcrypt.hash(dbUserData._id.toString(), 10)
+
         return new Response(JSON.stringify(
             {
                 message: 'User logged in',
                 username: dbUserData.username,
                 name: dbUserData.name,
+                id: hashedId,
                 isLoggedIn: true,
             }
         ), {

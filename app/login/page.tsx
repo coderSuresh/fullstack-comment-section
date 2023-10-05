@@ -40,6 +40,7 @@ const Login = () => {
                         const userValues = {
                             name: data.name,
                             username: data.username,
+                            id: data.id,
                             isLoggedIn: data.isLoggedIn,
                         }
 
