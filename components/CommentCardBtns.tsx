@@ -9,6 +9,7 @@ const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
     const { values } = React.useContext(UserContext)
 
     const [isAuthor, setIsAuthor] = React.useState(false)
+    const [loading, setLoading] = React.useState(true)
 
     const checkIfUserIsAuthor = async () => {
         fetch('/api/verify-author', {
@@ -17,6 +18,9 @@ const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
         })
             .then(res => res.json())
             .then(data => {
+
+                setLoading(false)
+
                 if (data.error) {
                     console.log(data.error)
                     return
@@ -41,16 +45,29 @@ const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
     return (
         <div className='sm:static absolute bottom-8 right-5'>
 
-            {
+            {loading
+                ?
+                <div className='h-4 w-12 rounded bg-light-gray animate-pulse'></div>
+                :
                 isAuthor
-                    ? <p>Hello world</p>
-                    : <p>sjdkfjsldjfl</p>
-            }
+                    ?
+                    <div className='flex items-center gap-x-5'>
+                        <button className='flex items-center gap-x-2 text-sm font-medium text-soft-red'>
+                            <i className='fas fa-trash text-xs' />
+                            <span>Delete</span>
+                        </button>
 
-            <button onClick={() => changeReplyContext()} className='flex items-center gap-2 text-moderate-blue hover:opacity-50'>
-                <i className='fas fa-reply'></i>
-                <p className='font-medium'>Reply</p>
-            </button>
+                        <button className='flex items-center gap-x-2 text-sm font-medium text-moderate-blue'>
+                            <i className='fas fa-pencil text-xs' />
+                            <span>Edit</span>
+                        </button>
+                    </div>
+                    :
+                    <button onClick={() => changeReplyContext()} className='flex items-center gap-2 text-moderate-blue hover:opacity-50'>
+                        <i className='fas fa-reply'></i>
+                        <p className='font-medium'>Reply</p>
+                    </button>
+            }
         </div>
     )
 }
