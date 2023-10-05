@@ -27,6 +27,7 @@ const AddReply = ({ author, _id, addReplyToComment }: ReplyProps) => {
         const replyObj = {
             comment: comment,
             author: values.username,
+            userId: values.id,
             createdAt: new Date(),
             replyTo: author,
             commentID: _id,
@@ -39,12 +40,13 @@ const AddReply = ({ author, _id, addReplyToComment }: ReplyProps) => {
             .then(res => res.json())
             .then(data => {
 
+                setCommenting(false)
+
                 if (data.error) {
                     console.log(data.error)
                     return
                 }
 
-                setCommenting(false)
                 setReply(replyObj)
                 addReplyToComment(_id!, data.newReply)
                 setComment('')

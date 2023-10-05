@@ -1,5 +1,6 @@
 import CommentModel from "@/models/Comment"
 import { connectDB } from "@/utils/database"
+import { verifyUsername } from "@/utils/verifyUsername"
 import mongoose from "mongoose"
 
 const PUT = async (req: Request) => {
@@ -19,6 +20,12 @@ const PUT = async (req: Request) => {
         }
 
         await connectDB()
+
+        const isVerified = await verifyUsername(replyObj.author, replyObj.userId)
+        
+        if (!isVerified) {
+            return new Response(JSON.stringify({ error: "You are not authorized! Please login!" }))
+        }
 
         try {
             await CommentModel.updateOne(
