@@ -1,11 +1,12 @@
 import CommentModel from "@/models/Comment"
 import Register from "@/models/auth/Register"
 import { connectDB } from "@/utils/database"
+import { verifyUsername } from "@/utils/verifyUsername"
 
 const PUT = async (req: Request) => {
     try {
 
-        const { vote, id, commentID, username, author } = await req.json()
+        const { vote, id, commentID, hashedUserId, username, author } = await req.json()
         let userId: string;
 
         await connectDB()
@@ -14,6 +15,12 @@ const PUT = async (req: Request) => {
             const user = await Register.findOne(
                 { 'username': username },
             )
+
+            const isVerified = await verifyUsername(hashedUserId, user._id.toString())
+
+            if (!isVerified) {
+                return new Response(JSON.stringify({ error: "You are not authorized! Please login!" }))
+            }
 
             if (!user) return new Response(JSON.stringify({ 'error': 'Please login to continue!' }))
             if (user.username === author) return new Response(JSON.stringify({ 'error': 'You cannot vote on your own comment!' }))

@@ -28,6 +28,7 @@ const UpvoteDownvote = ({ _id, score, author, commentID }: CommentProps) => {
                     'id': _id,
                     'commentID': commentID,
                     'username': values.username,
+                    'userId': values.id,
                     'author': author
                 })
         })
