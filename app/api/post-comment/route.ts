@@ -7,7 +7,7 @@ const POST = async (req: Request) => {
         const content = await req.json()
         await connectDB()
 
-        const isVerified = await verifyUsername(content.username, content.userId)
+        const isVerified = await verifyUsername(content.author, content.userId)
 
         if (!isVerified) {
             return new Response(JSON.stringify({ error: "You are not authorized! Please login!" }))
