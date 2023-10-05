@@ -52,12 +52,12 @@ const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
                 isAuthor
                     ?
                     <div className='flex items-center gap-x-5'>
-                        <button className='flex items-center gap-x-2 text-sm font-medium text-soft-red'>
+                        <button className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-soft-red'>
                             <i className='fas fa-trash text-xs' />
                             <span>Delete</span>
                         </button>
 
-                        <button className='flex items-center gap-x-2 text-sm font-medium text-moderate-blue'>
+                        <button className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-moderate-blue'>
                             <i className='fas fa-pencil text-xs' />
                             <span>Edit</span>
                         </button>
