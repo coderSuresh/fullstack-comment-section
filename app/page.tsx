@@ -8,11 +8,13 @@ import { UserContext } from '@/context/UserContext'
 import { ReplyContext } from '@/context/ReplyContext'
 import { CommentProps } from '@/types/props'
 import AddReply from '@/components/AddReply'
+import { CommentContext } from '@/context/CommentContext'
 
 const Home = () => {
 
   const { values, setValues } = React.useContext(UserContext)
   const { reply } = React.useContext(ReplyContext)
+  const {deletedCommentValues, setDeletedCommentValues} = React.useContext(CommentContext)
   const router = useRouter()
 
   const [comments, setComments] = React.useState<CommentProps[]>([])
@@ -42,7 +44,7 @@ const Home = () => {
       cache: 'no-store',
     })
     const data = await res.json()
-    
+
     setLoading(false)
 
     if (data.error) {
@@ -57,6 +59,21 @@ const Home = () => {
   React.useEffect(() => {
     fetchComments()
   }, [])
+
+  const removeDeletedComment = (commentId: string) => {
+    const newCommentsAfterDelete = comments.filter((comment: CommentProps) => comment._id !== commentId)
+    setComments(newCommentsAfterDelete)
+  }
+
+  React.useEffect(() => {
+    if (deletedCommentValues.isDeleted) {
+      removeDeletedComment(deletedCommentValues.commentID)
+      setDeletedCommentValues({
+        isDeleted: false,
+        commentID: '',
+      })
+    }
+  }, [deletedCommentValues])
 
   const addReplyToComment = (commentId: string, newReply: CommentProps) => {
     setComments((prevComments: any) => [

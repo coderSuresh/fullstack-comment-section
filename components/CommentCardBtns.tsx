@@ -2,14 +2,17 @@ import React from 'react'
 import { CommentProps } from '@/types/props'
 import { ReplyContext } from '@/context/ReplyContext'
 import { UserContext } from '@/context/UserContext'
+import { CommentContext } from '@/context/CommentContext'
 
 const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
 
     const { reply, setReply } = React.useContext(ReplyContext)
     const { values } = React.useContext(UserContext)
+    const { setDeletedCommentValues } = React.useContext(CommentContext)
 
     const [isAuthor, setIsAuthor] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
+    const [deleting, setDeleting] = React.useState(false)
 
     const checkIfUserIsAuthor = async () => {
         fetch('/api/verify-author', {
@@ -42,6 +45,27 @@ const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
         })
     }
 
+    const deleteComment = async () => {
+        setDeleting(true)
+        const res = await fetch('/api/delete-comment', {
+            method: 'DELETE',
+            body: JSON.stringify({ 'commentID': _id })
+        })
+        const data = await res.json()
+
+        setDeleting(false)
+
+        if (data.error) {
+            alert(data.error)
+            return
+        }
+
+        setDeletedCommentValues({
+            isDeleted: true,
+            commentID: _id!,
+        })
+    }
+
     return (
         <div className='sm:static absolute bottom-8 right-5'>
 
@@ -52,10 +76,16 @@ const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
                 isAuthor
                     ?
                     <div className='flex items-center gap-x-5'>
-                        <button className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-soft-red'>
-                            <i className='fas fa-trash text-xs' />
-                            <span>Delete</span>
-                        </button>
+                        {
+                            deleting
+                                ?
+                                <p className='font-medium text-soft-red text-sm'>Deleting...</p>
+                                :
+                                <button onClick={() => deleteComment()} className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-soft-red'>
+                                    <i className='fas fa-trash text-xs' />
+                                    <span>Delete</span>
+                                </button>
+                        }
 
                         <button className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-moderate-blue'>
                             <i className='fas fa-pencil text-xs' />
