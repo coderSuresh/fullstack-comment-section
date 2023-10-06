@@ -6,8 +6,8 @@ import { verifyUsername } from "@/utils/verifyUsername"
 const PUT = async (req: Request) => {
     try {
 
-        const { vote, id, commentID, hashedUserId, username, author } = await req.json()
-        let userId: string;
+        const { vote, id, commentID, userId, username, author } = await req.json()
+        let decryptedUserId: string;
 
         await connectDB()
 
@@ -16,7 +16,7 @@ const PUT = async (req: Request) => {
                 { 'username': username },
             )
 
-            const isVerified = await verifyUsername(hashedUserId, user._id.toString())
+            const isVerified = await verifyUsername(username, userId)
 
             if (!isVerified) {
                 return new Response(JSON.stringify({ error: "You are not authorized! Please login!" }))
@@ -24,13 +24,13 @@ const PUT = async (req: Request) => {
 
             if (!user) return new Response(JSON.stringify({ 'error': 'Please login to continue!' }))
             if (user.username === author) return new Response(JSON.stringify({ 'error': 'You cannot vote on your own comment!' }))
-            userId = user._id
+            decryptedUserId = user._id
 
         } catch (err) {
-            return new Response(JSON.stringify({ 'error': 'Please login to continue!' }))
+            return new Response(JSON.stringify({ 'error': 'Please login to continue!' + err }))
         }
 
-        const dotSomeLogic = (id: string) => id.toString() === userId.toString()
+        const dotSomeLogic = (id: string) => id.toString() === decryptedUserId.toString()
 
         try {
             // if it is a comment
@@ -45,10 +45,10 @@ const PUT = async (req: Request) => {
 
                 if (comment.downVotedBy.some(dotSomeLogic)) {
                     comment.score++
-                    comment.downVotedBy.splice(comment.downVotedBy.indexOf(userId), 1)
+                    comment.downVotedBy.splice(comment.downVotedBy.indexOf(decryptedUserId), 1)
                 } else {
                     comment.score++
-                    comment.upVotedBy.push(userId)
+                    comment.upVotedBy.push(decryptedUserId)
                 }
             }
             else if (vote === 'down') {
@@ -57,10 +57,10 @@ const PUT = async (req: Request) => {
 
                 if (comment.upVotedBy.some(dotSomeLogic)) {
                     comment.score--
-                    comment.upVotedBy.splice(comment.upVotedBy.indexOf(userId), 1)
+                    comment.upVotedBy.splice(comment.upVotedBy.indexOf(decryptedUserId), 1)
                 } else {
                     comment.score--
-                    comment.downVotedBy.push(userId)
+                    comment.downVotedBy.push(decryptedUserId)
                 }
             }
 
@@ -88,10 +88,10 @@ const PUT = async (req: Request) => {
 
                 if (replies[replyIndex].downVotedBy.some(dotSomeLogic)) {
                     replies[replyIndex].score++
-                    replies[replyIndex].downVotedBy.splice(replies[replyIndex].downVotedBy.indexOf(userId), 1)
+                    replies[replyIndex].downVotedBy.splice(replies[replyIndex].downVotedBy.indexOf(decryptedUserId), 1)
                 } else {
                     replies[replyIndex].score++
-                    replies[replyIndex].upVotedBy.push(userId)
+                    replies[replyIndex].upVotedBy.push(decryptedUserId)
                 }
             } else if (vote === 'down') {
 
@@ -101,10 +101,10 @@ const PUT = async (req: Request) => {
 
                 if (replies[replyIndex].upVotedBy.some(dotSomeLogic)) {
                     replies[replyIndex].score--
-                    replies[replyIndex].upVotedBy.splice(replies[replyIndex].upVotedBy.indexOf(userId), 1)
+                    replies[replyIndex].upVotedBy.splice(replies[replyIndex].upVotedBy.indexOf(decryptedUserId), 1)
                 } else {
                     replies[replyIndex].score--
-                    replies[replyIndex].downVotedBy.push(userId)
+                    replies[replyIndex].downVotedBy.push(decryptedUserId)
                 }
             }
 
