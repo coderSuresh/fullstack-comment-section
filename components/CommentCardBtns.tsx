@@ -4,7 +4,7 @@ import { ReplyContext } from '@/context/ReplyContext'
 import { UserContext } from '@/context/UserContext'
 import { CommentContext } from '@/context/CommentContext'
 
-const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
+const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
 
     const { reply, setReply } = React.useContext(ReplyContext)
     const { values } = React.useContext(UserContext)
@@ -49,7 +49,7 @@ const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
         setDeleting(true)
         const res = await fetch('/api/delete-comment', {
             method: 'DELETE',
-            body: JSON.stringify({ 'commentID': _id })
+            body: JSON.stringify({ 'id': _id, 'commentID': commentID })
         })
         const data = await res.json()
 
@@ -62,7 +62,14 @@ const CommentCardBtns = ({ _id, userId, author }: CommentProps) => {
 
         setDeletedCommentValues({
             isDeleted: true,
-            commentID: _id!,
+            commentID: commentID!,
+            replyID: data.isReply ? _id! : '',
+        })
+
+        setReply({
+            replyTo: '',
+            commentID: '',
+            reply: '',
         })
     }
 

@@ -9,12 +9,14 @@ import { ReplyContext } from '@/context/ReplyContext'
 import { CommentProps } from '@/types/props'
 import AddReply from '@/components/AddReply'
 import { CommentContext } from '@/context/CommentContext'
+import {removeDeletedReply} from '@/utils/removeDeleted/removeDeletedReply'
+import { removeDeletedComment } from '@/utils/removeDeleted/removeDeletedComment'
 
 const Home = () => {
 
   const { values, setValues } = React.useContext(UserContext)
   const { reply } = React.useContext(ReplyContext)
-  const {deletedCommentValues, setDeletedCommentValues} = React.useContext(CommentContext)
+  const { deletedCommentValues, setDeletedCommentValues } = React.useContext(CommentContext)
   const router = useRouter()
 
   const [comments, setComments] = React.useState<CommentProps[]>([])
@@ -67,7 +69,13 @@ const Home = () => {
 
   React.useEffect(() => {
     if (deletedCommentValues.isDeleted) {
-      removeDeletedComment(deletedCommentValues.commentID)
+
+      if (deletedCommentValues.replyID) {
+        removeDeletedReply(deletedCommentValues.commentID, deletedCommentValues.replyID, comments, setComments)
+      } else {
+        removeDeletedComment(deletedCommentValues.commentID)
+      }
+
       setDeletedCommentValues({
         isDeleted: false,
         commentID: '',
