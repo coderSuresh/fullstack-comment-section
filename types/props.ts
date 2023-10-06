@@ -20,3 +20,12 @@ export type ReplyProps = {
     author?: string,
     addReplyToComment: (commentId: string, newReply: CommentProps) => void,
 };
+
+export type ModalProps = {
+    title: string,
+    message: string,
+    positive?: string,
+    negative?: string,
+    confirm: () => void,
+    cancel: () => void,
+}

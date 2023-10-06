@@ -3,6 +3,7 @@ import { CommentProps } from '@/types/props'
 import { ReplyContext } from '@/context/ReplyContext'
 import { UserContext } from '@/context/UserContext'
 import { CommentContext } from '@/context/CommentContext'
+import Modal from './Modal'
 
 const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
 
@@ -13,6 +14,7 @@ const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
     const [isAuthor, setIsAuthor] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
     const [deleting, setDeleting] = React.useState(false)
+    const [confirmation, setConfirmation] = React.useState(false)
 
     const checkIfUserIsAuthor = async () => {
         fetch('/api/verify-author', {
@@ -45,7 +47,12 @@ const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
         })
     }
 
+    const confirmDelete = () => {
+        setConfirmation(true)
+    }
+
     const deleteComment = async () => {
+        setConfirmation(false)
         setDeleting(true)
         const res = await fetch('/api/delete-comment', {
             method: 'DELETE',
@@ -76,6 +83,18 @@ const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
     return (
         <div className='sm:static absolute bottom-8 right-5'>
 
+            {
+                confirmation &&
+                <Modal
+                    title='Delete Comment'
+                    message='Are you sure you want to delete this comment? This will remove the comment and can&apos;t be undone.'
+                    positive='Yes, Delete'
+                    negative='No, Cancel'
+                    confirm={deleteComment}
+                    cancel={() => setConfirmation(false)}
+                />
+            }
+
             {loading
                 ?
                 <div className='h-4 w-12 rounded bg-light-gray animate-pulse'></div>
@@ -88,7 +107,7 @@ const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
                                 ?
                                 <p className='font-medium text-soft-red text-sm'>Deleting...</p>
                                 :
-                                <button onClick={() => deleteComment()} className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-soft-red'>
+                                <button onClick={() => confirmDelete()} className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-soft-red'>
                                     <i className='fas fa-trash text-xs' />
                                     <span>Delete</span>
                                 </button>
