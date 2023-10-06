@@ -47,7 +47,12 @@ const AddReply = ({ author, _id, addReplyToComment }: ReplyProps) => {
                     return
                 }
 
-                setReply(replyObj)
+                setReply({
+                    replyTo: '',
+                    commentID: '',
+                    reply: '',
+                })
+
                 addReplyToComment(_id!, data.newReply)
                 setComment('')
             })
