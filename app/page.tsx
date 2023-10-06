@@ -62,18 +62,13 @@ const Home = () => {
     fetchComments()
   }, [])
 
-  const removeDeletedComment = (commentId: string) => {
-    const newCommentsAfterDelete = comments.filter((comment: CommentProps) => comment._id !== commentId)
-    setComments(newCommentsAfterDelete)
-  }
-
   React.useEffect(() => {
     if (deletedCommentValues.isDeleted) {
 
       if (deletedCommentValues.replyID) {
         removeDeletedReply(deletedCommentValues.commentID, deletedCommentValues.replyID, comments, setComments)
       } else {
-        removeDeletedComment(deletedCommentValues.commentID)
+        removeDeletedComment(deletedCommentValues.commentID, comments, setComments)
       }
 
       setDeletedCommentValues({
