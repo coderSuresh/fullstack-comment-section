@@ -44,16 +44,23 @@ const EditComment = ({ comment, commentID, isReply, _id }: CommentProps) => {
                 onChange={(e) => setLocalComment(e.currentTarget.value)}
                 placeholder='Add a reply...'
                 name="comment" id="comment"
-                className='sm:mb-0 mb-[60px] placeholder-grayish-blue
+                className='placeholder-grayish-blue
                     resize-none border rounded-md w-full h-24 py-3 px-5 focus:border-moderate-blue focus:outline-none
                     '
             />
-            <button
-                className='bg-moderate-blue self-end text-white px-5 py-2 uppercase rounded-md font-medium hover:opacity-50
-                        sm:static absolute bottom-5 right-5'
-            >
-                {commenting ? 'Updating' : 'Update'}
-            </button>
+            <div className='self-end flex items-center bg-white sm:static absolute bottom-5 right-5'>
+                <button aria-label='cancel edit'>
+                    <i
+                        onClick={() => setEditCommentValues({ ...editCommentValues, editComment: false })}
+                        className='fas fa-times mr-5 text-xl'
+                    />
+                </button>
+                <button
+                    className='bg-moderate-blue text-white px-5 py-2 uppercase rounded-md font-medium hover:opacity-50'
+                >
+                    {commenting ? 'Updating' : 'Update'}
+                </button>
+            </div>
         </form>
     )
 }
