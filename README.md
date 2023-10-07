@@ -6,6 +6,7 @@ This is a solution to the [Interactive comments section challenge on Frontend Me
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
+    - [Extra](#extra)
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
@@ -27,14 +28,21 @@ Users should be able to:
 - **Bonus**: If you're building a purely front-end project, use `localStorage` to save the current state in the browser that persists when the browser is refreshed.
 - **Bonus**: Instead of using the `createdAt` strings from the `data.json` file, try using timestamps and dynamically track the time since the comment or reply was posted.
 
+#### Extra
+- **Bonus**: Add header with user's name, avatar (hardcoded image for now), and logout button
+- **Bonus**: Add login/register page with form validation
+- **Bonus**: Make the app fullstack by adding a backend with Next.js API routes and MongoDB
+- **Bonus**: Show error message on modal
+- **Bonus**: Show loaders when fetching data
+
 ### Screenshot
 
-![](./screenshot.jpg)
+![](/public/screenshot.png)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [https://github.com/coderSuresh/fullstack-comment-section](https://github.com/coderSuresh/fullstack-comment-section)
+- Live Site URL: [https://fullstack-comment.vercel.app/](https://fullstack-comment.vercel.app/)
 
 ## My process
 
@@ -56,6 +64,5 @@ I want to continue learning how to use Next.js API routes and MongoDB. I also wa
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
+- Frontend Mentor - [@codersuresh](https://www.frontendmentor.io/profile/codersuresh)
+- Linkedin - [@codersuresh](https://www.linkedin.com/in/codersuresh)
