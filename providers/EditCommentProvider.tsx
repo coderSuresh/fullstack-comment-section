@@ -8,7 +8,10 @@ const EditCommentProvider = ({ children }: ChildrenProps) => {
 
     const [editCommentValues, setEditCommentValues] = React.useState<EditCommentContextType>({
         editComment: false,
+        editedComment: '',
         id: '',
+        isReply: false,
+        commentId: '',
     })
 
     return (
