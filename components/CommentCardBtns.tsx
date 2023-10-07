@@ -4,12 +4,14 @@ import { ReplyContext } from '@/context/ReplyContext'
 import { UserContext } from '@/context/UserContext'
 import { CommentContext } from '@/context/CommentContext'
 import Modal from './Modal'
+import { EditCommentContext } from '@/context/EditCommentContext'
 
-const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
+const CommentCardBtns = ({ _id, commentID, isReply, userId, author }: CommentProps) => {
 
     const { reply, setReply } = React.useContext(ReplyContext)
     const { values } = React.useContext(UserContext)
     const { setDeletedCommentValues } = React.useContext(CommentContext)
+    const { setEditCommentValues } = React.useContext(EditCommentContext)
 
     const [isAuthor, setIsAuthor] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
@@ -80,6 +82,16 @@ const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
         })
     }
 
+    const editComment = () => {
+        setEditCommentValues({
+            editComment: true,
+            id: _id!,
+            commentId: commentID!,
+            editedComment: '',
+            isReply: isReply || false,
+        })
+    }
+
     return (
         <div className='sm:static absolute bottom-8 right-5'>
 
@@ -113,7 +125,7 @@ const CommentCardBtns = ({ _id, commentID, userId, author }: CommentProps) => {
                                 </button>
                         }
 
-                        <button className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-moderate-blue'>
+                        <button onClick={() => editComment()} className='flex items-center gap-x-2 hover:opacity-50 text-sm font-medium text-moderate-blue'>
                             <i className='fas fa-pencil text-xs' />
                             <span>Edit</span>
                         </button>

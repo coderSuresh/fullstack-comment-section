@@ -4,10 +4,13 @@ import CommentCardBtns from './CommentCardBtns'
 import { CommentProps } from '@/types/props'
 import { UserContext } from '@/context/UserContext'
 import { formatDistanceToNow } from 'date-fns'
+import { EditCommentContext } from '@/context/EditCommentContext'
+import EditComment from './EditComment'
 
 const CommentBody = ({ _id, author, commentID, userId, replyTo, comment, createdAt, loading }: CommentProps) => {
 
     const { values } = React.useContext(UserContext)
+    const { editCommentValues } = React.useContext(EditCommentContext)
 
     const renderTime = (createdAt: Date) => {
         const timeAgo = formatDistanceToNow(new Date(createdAt), {
@@ -53,7 +56,7 @@ const CommentBody = ({ _id, author, commentID, userId, replyTo, comment, created
                     </div>
                 </div>
 
-                <CommentCardBtns _id={_id} commentID={commentID || _id} userId={userId} author={author} />
+                <CommentCardBtns _id={_id} isReply={commentID ? true : false} commentID={commentID || _id} userId={userId} author={author} />
 
             </div>
 
@@ -67,7 +70,12 @@ const CommentBody = ({ _id, author, commentID, userId, replyTo, comment, created
                             <span className='font-medium text-moderate-blue'>@{replyTo} </span>
                     }
                     {
-                        comment
+                        editCommentValues.editComment && editCommentValues.id === _id
+                            ?
+                            // only reply has commentID field in DB.
+                            <EditComment comment={comment} isReply={commentID ? true : false} commentID={commentID || _id} _id={_id} />
+                            :
+                            comment
                     }
                 </div>
             </div>

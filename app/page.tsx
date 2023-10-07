@@ -9,14 +9,16 @@ import { ReplyContext } from '@/context/ReplyContext'
 import { CommentProps } from '@/types/props'
 import AddReply from '@/components/AddReply'
 import { CommentContext } from '@/context/CommentContext'
-import {removeDeletedReply} from '@/utils/removeDeleted/removeDeletedReply'
+import { removeDeletedReply } from '@/utils/removeDeleted/removeDeletedReply'
 import { removeDeletedComment } from '@/utils/removeDeleted/removeDeletedComment'
+import { EditCommentContext } from '@/context/EditCommentContext'
 
 const Home = () => {
 
   const { values, setValues } = React.useContext(UserContext)
   const { reply } = React.useContext(ReplyContext)
   const { deletedCommentValues, setDeletedCommentValues } = React.useContext(CommentContext)
+  const { editCommentValues, setEditCommentValues } = React.useContext(EditCommentContext)
   const router = useRouter()
 
   const [comments, setComments] = React.useState<CommentProps[]>([])
@@ -50,7 +52,7 @@ const Home = () => {
     setLoading(false)
 
     if (data.error) {
-      console.log(data.error)
+      alert(data.error)
       return
     }
 
@@ -62,6 +64,7 @@ const Home = () => {
     fetchComments()
   }, [])
 
+  // updated ui when a comment or reply is deleted
   React.useEffect(() => {
     if (deletedCommentValues.isDeleted) {
 
@@ -77,6 +80,33 @@ const Home = () => {
       })
     }
   }, [deletedCommentValues])
+
+  // update ui when a comment or reply is updated by the author
+  React.useEffect(() => {
+    if (editCommentValues.editedComment) {
+
+      const commentIndex = comments.findIndex(comment => comment._id === editCommentValues.commentId)
+
+      if (commentIndex != -1) {
+        const updatedComments = [...comments]
+
+        if (editCommentValues.isReply) {
+          const replies = updatedComments[commentIndex].replies
+
+          replies?.map((reply: CommentProps) => {
+            if (reply._id === editCommentValues.id) {
+              reply.comment = editCommentValues.editedComment
+            }
+          })
+
+        } else {
+          updatedComments[commentIndex].comment = editCommentValues.editedComment
+        }
+
+        setComments(updatedComments)
+      }
+    }
+  }, [editCommentValues])
 
   const addReplyToComment = (commentId: string, newReply: CommentProps) => {
     setComments((prevComments: any) => [

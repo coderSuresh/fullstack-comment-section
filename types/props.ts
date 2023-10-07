@@ -11,6 +11,7 @@ export type CommentProps = {
     createdAt?: Date,
     loading?: boolean,
     replies?: [],
+    isReply?: boolean,
     score?: number,
     replyTo?: string,
 };

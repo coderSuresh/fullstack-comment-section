@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import UserProvider from '@/providers/UserProvider'
 import ReplyProvider from '@/providers/ReplyProvider'
 import DeletedCommentProvider from '@/providers/DeletedCommentProvider'
+import EditCommentProvider from '@/providers/EditCommentProvider'
 
 export const metadata: Metadata = {
   title: 'Comments | CoderSuresh',
@@ -23,9 +24,11 @@ const RootLayout = ({
       <body className='md:w-[740px] md:mx-auto mx-3 md:my-10'>
         <UserProvider>
           <DeletedCommentProvider>
-            <ReplyProvider>
-              {children}
-            </ReplyProvider>
+            <EditCommentProvider>
+              <ReplyProvider>
+                {children}
+              </ReplyProvider>
+            </EditCommentProvider>
           </DeletedCommentProvider>
         </UserProvider>
       </body>
