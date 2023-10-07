@@ -1,12 +1,17 @@
 'use client'
+import React from 'react'
 import { UserContext } from '@/context/UserContext'
 import { CommentProps } from '@/types/props'
-import React from 'react'
+import Modal from './Modal'
 
 const UpvoteDownvote = ({ _id, score, author, commentID }: CommentProps) => {
 
     const [vote, setVote] = React.useState(score || 0)
     const [voting, setVoting] = React.useState(false)
+    const [needsToShowModal, setNeedsToShowModal] = React.useState({
+        show: false,
+        message: '',
+    })
 
     const { values } = React.useContext(UserContext)
 
@@ -38,7 +43,10 @@ const UpvoteDownvote = ({ _id, score, author, commentID }: CommentProps) => {
                 setVoting(false)
 
                 if (data.error) {
-                    alert(data.error)
+                    setNeedsToShowModal({
+                        show: true,
+                        message: data.error,
+                    })
                     return
                 }
 
@@ -48,6 +56,17 @@ const UpvoteDownvote = ({ _id, score, author, commentID }: CommentProps) => {
 
     return (
         <div className='flex sm:flex-col sm:py-3 px-3 sm:gap-2 gap-x-5  bg-very-light-gray w-fit h-fit rounded-xl text-center'>
+
+            {
+                needsToShowModal.show &&
+                <Modal
+                    title='Error'
+                    positive='Ok'
+                    message={needsToShowModal.message}
+                    confirm={() => setNeedsToShowModal({ show: false, message: '' })}
+                />
+            }
+
             <button
                 aria-label='upvote'
                 onClick={() => handleUpvote()}

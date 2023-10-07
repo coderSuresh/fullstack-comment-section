@@ -28,5 +28,5 @@ export type ModalProps = {
     positive?: string,
     negative?: string,
     confirm: () => void,
-    cancel: () => void,
+    cancel?: () => void,
 }

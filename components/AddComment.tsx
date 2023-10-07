@@ -3,6 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { UserContext } from '@/context/UserContext'
 import { CommentProps } from '@/types/props'
+import Modal from './Modal'
 
 type AddCommentProps = {
     setComments: React.Dispatch<React.SetStateAction<CommentProps[]>>
@@ -12,6 +13,10 @@ const AddComment = ({ setComments }: AddCommentProps) => {
 
     const [comment, setComment] = React.useState('')
     const [commenting, setCommenting] = React.useState(false)
+    const [needsToShowModal, setNeedsToShowModal] = React.useState({
+        show: false,
+        message: '',
+    })
 
     const { values } = React.useContext(UserContext)
 
@@ -21,7 +26,10 @@ const AddComment = ({ setComments }: AddCommentProps) => {
         setCommenting(true)
 
         if (!values.username) {
-            alert('Please login to post a comment')
+            setNeedsToShowModal({
+                show: true,
+                message: 'Please log in to post a comment.',
+            })
             setCommenting(false)
             return
         }
@@ -41,7 +49,10 @@ const AddComment = ({ setComments }: AddCommentProps) => {
                 setCommenting(false)
 
                 if (data.error) {
-                    console.log(data.error)
+                    setNeedsToShowModal({
+                        show: true,
+                        message: data.error,
+                    })
                     return
                 }
 
@@ -52,6 +63,15 @@ const AddComment = ({ setComments }: AddCommentProps) => {
 
     return (
         <div className='bg-white p-5 text-dark-blue relative rounded-md flex gap-5 mb-5 sm:flex-row items-start'>
+            {
+                needsToShowModal.show &&
+                <Modal
+                    title='Error'
+                    positive='Ok'
+                    message={needsToShowModal.message}
+                    confirm={() => setNeedsToShowModal({ show: false, message: '' })}
+                />
+            }
             <Image
                 priority
                 src='/images/avatars/image-amyrobson.png'

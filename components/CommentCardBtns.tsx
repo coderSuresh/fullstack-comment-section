@@ -17,6 +17,10 @@ const CommentCardBtns = ({ _id, commentID, isReply, userId, author }: CommentPro
     const [loading, setLoading] = React.useState(true)
     const [deleting, setDeleting] = React.useState(false)
     const [confirmation, setConfirmation] = React.useState(false)
+    const [needsToShowModal, setNeedsToShowModal] = React.useState({
+        show: false,
+        message: '',
+    })
 
     const checkIfUserIsAuthor = async () => {
         fetch('/api/verify-author', {
@@ -29,7 +33,10 @@ const CommentCardBtns = ({ _id, commentID, isReply, userId, author }: CommentPro
                 setLoading(false)
 
                 if (data.error) {
-                    console.log(data.error)
+                    setNeedsToShowModal({
+                        show: true,
+                        message: data.error,
+                    })
                     return
                 }
 
@@ -65,7 +72,10 @@ const CommentCardBtns = ({ _id, commentID, isReply, userId, author }: CommentPro
         setDeleting(false)
 
         if (data.error) {
-            alert(data.error)
+            setNeedsToShowModal({
+                show: true,
+                message: data.error,
+            })
             return
         }
 
@@ -94,6 +104,16 @@ const CommentCardBtns = ({ _id, commentID, isReply, userId, author }: CommentPro
 
     return (
         <div className='sm:static absolute bottom-8 right-5'>
+
+            {
+                needsToShowModal.show &&
+                <Modal
+                    title='Error'
+                    positive='Ok'
+                    message={needsToShowModal.message}
+                    confirm={() => setNeedsToShowModal({ show: false, message: '' })}
+                />
+            }
 
             {
                 confirmation &&

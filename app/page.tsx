@@ -12,17 +12,22 @@ import { CommentContext } from '@/context/CommentContext'
 import { removeDeletedReply } from '@/utils/removeDeleted/removeDeletedReply'
 import { removeDeletedComment } from '@/utils/removeDeleted/removeDeletedComment'
 import { EditCommentContext } from '@/context/EditCommentContext'
+import Modal from '@/components/Modal'
 
 const Home = () => {
 
   const { values, setValues } = React.useContext(UserContext)
   const { reply } = React.useContext(ReplyContext)
   const { deletedCommentValues, setDeletedCommentValues } = React.useContext(CommentContext)
-  const { editCommentValues, setEditCommentValues } = React.useContext(EditCommentContext)
+  const { editCommentValues } = React.useContext(EditCommentContext)
   const router = useRouter()
 
   const [comments, setComments] = React.useState<CommentProps[]>([])
   const [loading, setLoading] = React.useState(false)
+  const [needsToShowModal, setNeedsToShowModal] = React.useState({
+    show: false,
+    message: '',
+  })
 
   React.useEffect(() => {
     const checkIfUserIsLoggedIn = () => {
@@ -52,7 +57,10 @@ const Home = () => {
     setLoading(false)
 
     if (data.error) {
-      alert(data.error)
+      setNeedsToShowModal({
+        show: true,
+        message: data.error,
+      })
       return
     }
 
@@ -165,6 +173,17 @@ const Home = () => {
     <>
       {values.isLoggedIn ?
         <>
+          
+          {
+            needsToShowModal.show &&
+            <Modal
+              title='Error'
+              positive='Ok'
+              message={needsToShowModal.message}
+              confirm={() => setNeedsToShowModal({ show: false, message: '' })}
+            />
+          }
+
           <header className='md:w-[740px] md:mx-auto md:static md:my-10 flex items-center justify-between gap-5 mb-5 absolute top-0 left-0 right-0 bg-white p-5'>
             <div className='flex gap-5 items-center'>
               <Image className='w-12' src='/images/avatars/image-amyrobson.png' height={50} width={50} alt='your profile photo' />
