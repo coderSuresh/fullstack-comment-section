@@ -91,13 +91,13 @@ const Login = () => {
                         className='mb-5 p-2 w-full border focus:outline-none focus:border-moderate-blue rounded-md'
                         type={`${showPassword ? 'text' : 'password'}`} placeholder='xxxxxxxx'
                     />
-                    <button type='button' tabIndex={-1} onClick={() => setShowPassword((showPassword) => !showPassword)}>
+                    <button type='button' aria-label='toggle password' tabIndex={-1} onClick={() => setShowPassword((showPassword) => !showPassword)}>
                         <i className={`fas fa-eye${showPassword ? '-slash' : ''} absolute right-2 top-3`} />
                     </button>
                 </div>
 
                 <p className='mb-5 text-right text-sm'>
-                    Forgot your password? <Link href='/forgot-password' className='text-moderate-blue'>Reset</Link>
+                    Forgot your password? <Link href='/forgot-password' className='text-moderate-blue underline'>Reset</Link>
                 </p>
 
                 <button disabled={loading} className='bg-moderate-blue outline focus:outline-4 hover:outline-outline-color focus:outline-outline-color uppercase font-medium text-white py-2 rounded-md'>
@@ -105,7 +105,7 @@ const Login = () => {
                 </button>
 
                 <p className='mt-5 text-center'>
-                    Don&apos;t have an account? <Link href='/register' className='text-moderate-blue'>Register</Link>
+                    Don&apos;t have an account? <Link href='/register' className='text-moderate-blue underline'>Register</Link>
                 </p>
 
             </form>
