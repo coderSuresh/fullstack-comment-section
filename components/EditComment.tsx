@@ -3,7 +3,7 @@ import { CommentProps } from '@/types/props'
 import { EditCommentContext } from '@/context/EditCommentContext'
 import Modal from './Modal'
 
-const EditComment = ({ comment, commentID, isReply, _id }: CommentProps) => {
+const EditComment = ({ comment, commentID, _id }: CommentProps) => {
 
     const [commenting, setCommenting] = React.useState(false)
     const [localComment, setLocalComment] = React.useState(comment)
@@ -35,8 +35,6 @@ const EditComment = ({ comment, commentID, isReply, _id }: CommentProps) => {
             })
             return
         }
-
-        console.log(commentID, isReply)
 
         setEditCommentValues({
             ...editCommentValues,
